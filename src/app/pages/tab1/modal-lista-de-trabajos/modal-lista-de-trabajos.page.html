@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>modal-lista-de-trabajos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>Trabajos {{statusName}}</ion-list-header>
+    <ion-item *ngFor="let item of workRequestLst" (click)="openSelectedWorkDetails()" >
+      <ion-avatar slot="start">
+        <img src="../../../../assets/app_she_icon-05.png" />
+      </ion-avatar>
+      <ion-label>
+        <h2>Folio: {{item.workRequestId}}</h2>
+        <h3>Objetivo: {{item.workRequestTitle}}</h3>
+        <h3>Sitio: {{item.agencyName}}</h3>
+        <h3>Fecha Inicio: {{item.workRequestInitDate}}</h3>
+        <h3>Fecha Fin: {{item.workRequestEndDate}}</h3>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

@@ -1,0 +1,232 @@
+<ion-header>
+  <ion-toolbar>
+    <p>Nueva solicitud</p>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #formularioSolicitudDeTrabajo="ngForm" (ngSubmit)="uploadSolicitud(formularioSolicitudDeTrabajo)">
+    <ion-list>
+<!--     <ion-list-header>
+      <ion-label>Formulario valido:{{formularioSolicitudDeTrabajo.valid}}</ion-label>
+    </ion-list-header> -->
+   
+    <ion-item>
+      <ion-label>Email:</ion-label>
+      <ion-input 
+        type="email" 
+        placeholder="Email responsable"
+        name="email"
+        [(ngModel)]="workRequestModel.emailJobManagerByCompany"
+        pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})"
+        required> 
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Nombre:</ion-label>
+      <ion-input 
+        type="text" 
+        placeholder="Nombre responsable"
+        name="name"
+        [(ngModel)]="workRequestModel.nameJobManagerByCompany" 
+        required> 
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Objetivo:</ion-label>
+      <ion-input 
+        type="text" 
+        placeholder="Objetivo de trabajo"
+        name="target"
+        [(ngModel)]="workRequestModel.workTitle" 
+        required> 
+      </ion-input>
+    </ion-item>
+
+   
+    <ion-item>
+      <ion-label>Agencia:</ion-label>
+      <ion-select multiple="false" (ionChange)="permitToWorkAddAgency($event)" cancelText="Cancelar" okText="Guardar">
+        <ion-select-option 
+        *ngFor="let item of lstAgencies" >{{item.agencyName}}-{{item.agencyId}}</ion-select-option>
+         </ion-select>
+    </ion-item>
+  
+
+    <ion-item>
+      <ion-label>Area:</ion-label>
+      <ion-input 
+        type="text" 
+        placeholder="Area del trabajo"
+        name="subArea"
+        [(ngModel)]="workRequestModel.area" 
+        required> 
+      </ion-input>
+    </ion-item>
+
+ <!--    <ion-item (click)="showPicker = !showPicker">
+      <ion-label>Date</ion-label>
+      <ion-text slot="end">
+        {{formattedString}}
+      </ion-text>
+      <ion-datetime 
+      *ngIf="showPicker" 
+      #datetime
+      [value]="dateValue"
+      seize="cover" 
+      (ionChange)="dateChanged(datetime.value)" 
+      showDefaultButtons="true"
+      (ionCancel)="showPicker = false">
+
+      </ion-datetime>
+    </ion-item> -->
+
+    <ion-item id="open-modal-date-init">
+      <ion-icon icon="calendar-outline" slot="start" color="primary"></ion-icon>
+      <ion-label>
+        Fecha inicio:
+      </ion-label>
+      <ion-text slot="end">{{formattedStringDateInit}}</ion-text>
+    </ion-item>
+
+    <ion-modal trigger="open-modal-date-init" mode="md">
+      <ng-template>
+        <ion-content class="ion-content-modal">
+          <ion-datetime 
+            #datetime
+            [value]="dateValue"
+            seize="cover" 
+            (ionChange)="dateChangedInit(datetime.value)" 
+            (ionCancel)="showPicker = false">
+            <ion-buttons slot="buttons">
+              <ion-button (click)="close()">Cancelar</ion-button>
+              <ion-button (click)="selectDateInit()" color="primary">Guardar</ion-button>
+            </ion-buttons>
+          </ion-datetime>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+
+
+    <ion-item id="open-modal-date-finish">
+      <ion-icon icon="calendar-outline" slot="start" color="primary"></ion-icon>
+      <ion-label>
+        Fecha Fin:
+      </ion-label>
+      <ion-text slot="end">{{formattedStringDateFinish}}</ion-text>
+    </ion-item>
+
+    <ion-modal trigger="open-modal-date-finish" mode="md">
+      <ng-template>
+        <ion-content class="ion-content-modal">
+          <ion-datetime 
+            #datetime
+            [value]="dateValue"
+            seize="cover" 
+            (ionChange)="dateChangedFinish(datetime.value)" 
+            (ionCancel)="showPicker = false">
+            <ion-buttons slot="buttons">
+              <ion-button (click)="close()">Cancelar</ion-button>
+              <ion-button (click)="selectDateFinish()" color="primary">Guardar</ion-button>
+            </ion-buttons>
+          </ion-datetime>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+
+    <ion-item>
+      <ion-label>Personal designado</ion-label>
+      <ion-select multiple="true" (ionChange)="permitToWorkAddEmployeeTypeLst($event)" cancelText="Cancelar" okText="Guardar">
+        <ion-select-option 
+        *ngFor="let item of lstWorkEmployeeTypes" >{{item.workEmployeeTypeName}}-{{item.workEmployeeTypeid}}</ion-select-option>
+         </ion-select>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label>Descripción detallada del trabajo:</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-textarea rows="6" cols="20" 
+        placeholder="En este campo debera especificar que tipo de trabajo va a ejecutar"
+        name="workDescription"
+        [(ngModel)]="workRequestModel.workDescription" 
+        required> 
+      </ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Tipo de trabajo a realizar</ion-label>
+      <ion-select multiple="false" (ionChange)="permitToWorkAddTypeLst($event)" cancelText="Cancelar" okText="Guardar">
+        <ion-select-option 
+        *ngFor="let item of lstWorkTypesToDo" >{{item.mandatoryMeasureName}}-{{item.mandatoryMeasureid}}</ion-select-option>
+         </ion-select>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label>Riesgos potenciales de acuerdo al trabajo:</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-textarea rows="6" cols="20" 
+        placeholder="En este campo debera especificar todos los riesgos que puede presentar el trabajo a realizar."
+        name="workRiskDescription"
+        [(ngModel)]="workRequestModel.workRiskDescription" 
+        required> 
+      </ion-textarea>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-button size="full" color="secondary" (click)="openModalForSelectedEmployee()">Seleccionar empleados</ion-button>
+
+<!--         <ion-searchbar placeholder="Nombre"
+          [(ngModel)]="searchEmployee"
+          showCancelButton="focus"
+          animated>
+        </ion-searchbar> -->
+   <!--      <ion-select multiple="true" (ionChange)="addSelectedCompanyEmployeeUsers($event)" cancelText="Cancelar" okText="Guardar">
+          <ion-select-option 
+            *ngFor="let item of lstEmployeeCompany "> {{item.employeeName}} {{item.employeeLastName}} {{item.jobRole}} 
+          </ion-select-option>
+         </ion-select> -->
+    </ion-item>
+
+  </ion-list>
+  </form>
+
+  <div *ngIf="lstEmployeeCompanySelectedByUser.length > 0">
+  
+    <p>Empleados seleccionados:</p>
+    <ion-list>
+      <ion-item *ngFor="let item of lstEmployeeCompanySelectedByUser">
+        <ion-label> {{item.employeeName}} {{item.employeeLastName}}</ion-label>
+        <ion-label class="item-text-wrap" > {{item.jobRole}}</ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+<!-- signature box -->
+<p>Firma del responsable:</p>
+<signature-pad [options]="signaturePadOptions" id="signatureCanvas"></signature-pad>
+<ion-grid>
+  <ion-row>
+    <ion-col col-4>
+      <ion-button full color="danger" (click)="drawClear()">Cancelar</ion-button>
+    </ion-col>
+    <ion-col col-4>
+      <ion-button full color="light" (click)="drawClear()">Limpiar</ion-button>
+    </ion-col>
+ <!--    <ion-col col-4>
+      <ion-button full color="secondary" (click)="drawCompleted()" >Guardar</ion-button>
+    </ion-col> -->
+  </ion-row>
+</ion-grid>
+
+</ion-content>
+
+
+
+
+<ion-button size="full" color="secondary" (click)="uploadWorkRequest()">Medidas de solicitud obligatorias</ion-button>

@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Cargar evidencias de cumplimiento</ion-title>
+  </ion-toolbar>
+</ion-header>
+ 
+
+<ion-content>
+
+  <!-- ############ -->
+
+  <ion-item-sliding>
+
+    <ion-item>
+      <ion-label position="floating">Comentarios:</ion-label>
+        <ion-textarea type="text" value ="" [(ngModel)]="newEvidence.title" required></ion-textarea>
+      </ion-item>
+
+  
+        <ion-item>
+          
+        </ion-item>
+  
+        <ion-card *ngFor="let f of files">
+          <ion-icon (click)="deleteFile(f)"  name="trash" color="danger">Borrar</ion-icon>
+          <ion-card-content>
+            <div *ngIf="previewPostExt=='mp4';else photo">
+              <ion-item (click)="openFile(f)">
+                <ion-icon name="videocam" slot="start"></ion-icon>
+                <ion-label class="ion-text-wrap">
+                  Selecciona para previsualizar tu video!
+                </ion-label>
+              </ion-item>
+                <!--        
+                Este  metodo sirve para el inicio de todos los post pero hay que buscar otro para leer video nativo
+                <video controls="controls" preload="metadata" autoplay="autoplay" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+                 <source src="lol" type="video/mp4" />
+                </video> -->
+            </div>
+            <ng-template #photo>
+              <ion-card-content>
+                <ion-img class="mypost" [src]="previewPost" ></ion-img>
+              </ion-card-content>
+            </ng-template>
+
+            <div *ngIf="f">
+              <ion-button class="center" (click)="uploadFileToServer(f)" (click)="present()" color="success">Compartir!</ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+
+        <div *ngIf="!files[0]">
+          <ion-toolbar color="secondary">
+            <ion-button fill="clear" expand="full" color="light" (click)="selectMedia()">
+              <ion-icon slot="start" name="camera"></ion-icon>
+              Grabar o tomar fotografia 
+            </ion-button>
+          </ion-toolbar>
+        </div>
+  </ion-item-sliding>
+  
+
+
+</ion-content>
+
+<ion-footer>
+  <ion-button (click)="closeScheduleModal()" expand="block"  color="primary">
+    Regresar al inicio
+  </ion-button>
+</ion-footer>
+
+
+

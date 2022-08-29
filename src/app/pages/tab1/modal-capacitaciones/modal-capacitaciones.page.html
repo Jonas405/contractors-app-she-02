@@ -1,0 +1,29 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+
+    <img slot="start" src="../../../assets/app_she_icon-05.png" alt="" width="50px" style="padding-left: 10px;">
+
+    <ion-title>
+     <p align="center">{{training.title}}</p> 
+    </ion-title>
+    
+    <ion-avatar slot="end" style="width: 50px;height: 40px; margin-right:10px;">
+      <img src="../../../../assets/she_logo.jpg">
+    </ion-avatar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card-content>Detalles de entrenamiento</ion-card-content>
+  <ion-card >
+    <video class="center" controls="controls" preload="metadata" autoplay="autoplay" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+      <source src="https://domappssuiteservices.com/e-learning-web-app/certificado-de-manejo/SHE_ALCOHOL_VFX_V003.mp4" type="video/mp4" />
+     </video>  
+  </ion-card>
+</ion-content>
+
+<ion-footer>
+  <ion-button expand="block"  color="primary">
+    Regresar
+  </ion-button>
+</ion-footer>

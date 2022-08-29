@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Base de datos de empleados</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+  <ion-content class="ion-padding">
+
+    <ion-searchbar
+                 placeholder="Nombre o Apellido..."
+                 [(ngModel)] = "searchTerm"
+                 showCancelButton="focus"
+                 animated></ion-searchbar>
+
+    <ion-list>
+      <ion-item *ngFor="let item of lstEmployeeCompany |filter:searchTerm">
+        <ion-label> {{item.employeeName}} {{item.employeeLastName}}</ion-label>
+        <ion-label class="item-text-wrap" > {{item.jobRole}}</ion-label>
+        <ion-checkbox (click)="addSelectedEmployee(item)" ></ion-checkbox>
+      </ion-item>
+    </ion-list>
+
+  </ion-content>
+
+  <ion-button size="full" color="secondary" (click)="selectedUsers()">Guardar empleados selccionados</ion-button>
+

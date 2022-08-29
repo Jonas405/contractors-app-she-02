@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>modal-detalles-de-trabajo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Folio:61</ion-card-title>
+        <ion-card-subtitle>Responsable: Juan perez</ion-card-subtitle>
+        <ion-card-subtitle>Estatus: Completed</ion-card-subtitle>
+        <ion-card-subtitle>Agencia: Ceylan</ion-card-subtitle>
+        <ion-card-subtitle></ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        Descripciòn: Esta es un detalle extenso y detallado de todas 
+          las caracteristicas con las cuales se llevara 
+          acabo del trabajo , y decir que exactamente hara 
+          donde lo hara, como lo hara.
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Capacitaciones mandatorias.</ion-card-title>   
+        <ion-text>
+          Antes de pasar el trabajo a ejecutar a estado "Activo", debe 
+          realizar las capacitaciones asignadas, si todos los empleados
+          relacionados con la actividad no toman las capacitaciones el trabajo
+          no pasa a estado "Activo" y no podra hacer inicio del mismo.
+        </ion-text>
+        <section>
+          <ion-button (click)="openModalMandatoryTrainingByWorkType()" expand="block">Capacitaciones asignadas</ion-button>
+        </section>
+      </ion-card-header>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Declaraciones y evidencia de signos vitales.</ion-card-title>   
+        <ion-text>
+          Antes de pasar el trabajo a ejecutar a estado "Activo", debe 
+          realizar una grabación en tiempo real declarando que sus signos vitales
+          estan en perfecto estado para ejecutar la tarea y adjuntar una fotografia
+          de su apto medico con la fecha del dìa legible 
+        </ion-text>
+        <section>
+          <ion-button (click)="openModalForRecordedVideoAndUploadEvidenceApto()" expand="block">Capacitaciones asignadas</ion-button>
+        </section>
+      </ion-card-header>
+    </ion-card>
+
+
+
+
+
+
+
+</ion-content>
