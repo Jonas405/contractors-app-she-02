@@ -12,6 +12,7 @@ import { NewEvidenceModel } from 'src/app/models/work-request-model';
 import { File, FileEntry } from '@awesome-cordova-plugins/file/ngx'; 
 import { WorksService } from 'src/app/services/works.service';
 
+
 const MEDIA_FOLDER_NAME = 'CONTRACTORS';
 
 @Component({
@@ -435,7 +436,7 @@ pickImageFromGallery(){
       this.deleteFile(element)
     })
 
-    this.navCtrl.navigateRoot('/tab1');
+    this.navCtrl.navigateRoot('/tabs/tab1');
   }
 
 

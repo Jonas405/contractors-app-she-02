@@ -13,6 +13,7 @@ export class NewWorkRequestModel{
     workTitle?:                 string;
     workRequestStatusId?:       number;
     specialRecomendations?:     string;
+    companyUserId: number;
 }
 
 
@@ -40,6 +41,16 @@ export class NewEvidenceModel{
     dirEvidence?:   string;
 
 }
+
+export class NewWorkRequestRelationMandatoryMeasureValidationSupplySshe{
+    relationWorkRequestMandatoryMeasureId: number;
+    validationSupply: number;
+    validationSshe: number;
+    mandatoryMeasuresDetailsId: number;
+    mandatoryMeasuresId: number;
+    mandatoryMeasuresOptionId: number;
+  }
+    
 
 
 

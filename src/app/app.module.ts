@@ -24,7 +24,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(),AppRoutingModule,HttpClientModule, Ng2SearchPipeModule],
+  imports: [BrowserModule, IonicModule.forRoot(),IonicStorageModule.forRoot(),AppRoutingModule,HttpClientModule, Ng2SearchPipeModule],
   providers: [
     Camera,
     MediaCapture,

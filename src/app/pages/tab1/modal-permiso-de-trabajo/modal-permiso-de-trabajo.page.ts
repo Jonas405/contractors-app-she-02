@@ -1,12 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, NgForm } from '@angular/forms';
-import { IonDatetime, ModalController } from '@ionic/angular';
+import { IonDatetime, ModalController, NavController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 import { SignaturePad } from 'angular2-signaturepad';
 import { format, parseISO } from 'date-fns';
-import { MandatoryMeasures } from 'src/app/interfaces/measuresDetails';
+import { MandatoryMeasureOptions, MandatoryMeasures } from 'src/app/interfaces/measuresDetails';
+import { UserCompanyDetails } from 'src/app/interfaces/userDetails';
 import { Agencies, UserEmployeeCompany, WorkEmployeeTypes } from 'src/app/interfaces/worksDetails';
-import { NewWorkRequestModel, RelationWorkRequestEmployeeTypeModel, RelationWorkRequestMandatoryMeasureModel, WorkRequestRelationUserCompanyEmployeeModel } from 'src/app/models/work-request-model';
+import { NewWorkRequestModel, NewWorkRequestRelationMandatoryMeasureValidationSupplySshe, RelationWorkRequestEmployeeTypeModel, RelationWorkRequestMandatoryMeasureModel, WorkRequestRelationUserCompanyEmployeeModel } from 'src/app/models/work-request-model';
 import { WorksService } from 'src/app/services/works.service';
 import { ModalDetalleDeTrabajoListaEmpleadosPage } from '../modal-detalle-de-trabajo-lista-empleados/modal-detalle-de-trabajo-lista-empleados.page';
 import { ModalMedidasDeControlPage } from '../modal-medidas-de-control/modal-medidas-de-control.page';
@@ -36,6 +38,9 @@ export class ModalPermisoDeTrabajoPage implements OnInit {
 
   signatureBlob;
 
+  // value for get las inserted work request to generate SSHE validation 
+  lastWorkRequestValidationId;
+
   //signature pad 
   @ViewChild(SignaturePad) signaturePad: SignaturePad;
 
@@ -54,21 +59,53 @@ export class ModalPermisoDeTrabajoPage implements OnInit {
     password:''
   }
 
+  idUserFromStorage: number;
+  userCompanyDetails: UserCompanyDetails;
+
   constructor(
     private modalCrtl: ModalController,
     private http: HttpClient,
+    private storage: Storage,
+    private navCtrl: NavController,
     private worksService: WorksService) {
     this.setToday()
    }
 
   ngOnInit() {
     //init the list employee to work
+
+    //Add input variable coming from login for this action with the user id logged
+    this.getUserIdFromStorage();
+
     this.getWorksTypesToDo()
     this.getAgencies();
     this.getWorkEmployeeTypes();
     this.getUsersEmployeeCompany()
  
   }
+
+  getUserIdFromStorage(){
+    this.storage.get('idUserFromDb').then((val)=>{
+      if(val != null ){
+        console.log('Your id from db storage is home ', val);
+      // this.idUserFromStorage = val; wait I need implements the login before 
+      //In awhile I'll pass fix id param with 5
+       this.userDetailsLoggedById(5)
+      // this.nextEvents(); refresh the page when pull down
+      }else{
+        this.navCtrl.navigateRoot('/login');
+      }
+    })
+  }
+
+  userDetailsLoggedById(id){
+    this.worksService.getUserDetailsById(id).subscribe((data: UserCompanyDetails)=>{
+      this.userCompanyDetails = data[0]
+      console.log(this.userCompanyDetails);
+      console.log(this.userCompanyDetails.jobManager)
+    })
+  }
+
 
   getUsersEmployeeCompany(){
     //Note in this part we need pass the id from the company id user logged
@@ -232,9 +269,12 @@ export class ModalPermisoDeTrabajoPage implements OnInit {
     let dformat = datenow.toISOString().replace("T"," ").substring(0, 19);
     this.workRequestModel.createdAt = dformat
 
-    this.workRequestModel.workRequestStatusId = 1 //siempre al iniciar estado 1
+    this.workRequestModel.workRequestStatusId = 1 //star with 1 state relation with work request status 1 "pending"
     //This is the principal model to upload work request
 
+    //User logged
+    this.workRequestModel.companyUserId = this.userCompanyDetails.jobManagerCompanyUserId;
+    this.workRequestModel.companyId = this.userCompanyDetails.companyId;
 
     console.log("Este es el modelo a enviar con la info")
     console.log(this.workRequestModel)
@@ -252,7 +292,25 @@ export class ModalPermisoDeTrabajoPage implements OnInit {
               this.postNewWorkRequestRelationEmployeeType(this.newWorkRequestId)
               this.postNewWorkRequestRelationMandatoryMeasure(this.newWorkRequestId)
               this.postNewWorkRequestRelationUserCompanyEmployee(this.newWorkRequestId)
-              this.openControlMeasures(this.newWorkRequestId)
+
+                 //Llamamos al ultimo id insertado para insertar en la otra tabla de relacion de validacion supply y she y continuar
+          // y se vea reflejada en la web los check para completar trabajo
+
+          this.worksService.getLastInsertedWorkRequestRelationMandatoryMeasure().subscribe(
+            data=>{
+                 console.log("this is th data")
+                 console.log(data)
+                 
+                this.lastWorkRequestValidationId = data;
+                console.log(this.lastWorkRequestValidationId)
+                this.openControlMeasures(this.newWorkRequestId)
+            },
+            err=>{
+              console.log("error al buscar ultimo id insertado")
+            }
+          )
+
+            
             },
             err=>{
               console.log("no pude encontrar el id")
@@ -430,13 +488,19 @@ export class ModalPermisoDeTrabajoPage implements OnInit {
     let datenow = new Date();
     let dformat = datenow.toISOString().replace("T"," ").substring(0, 19);
     //I need add the work request ID and also the userId
-    //const newPostSignatureFile = `${this.userDetails.id}.${dformat}.${ext}`;
+    //I'll login and with the company_users in this part of the app for work request
+    //Just company user can do it a work request
+    const ext = "png"
+    const newPostSignatureFile = `${this.userCompanyDetails.jobManagerCompanyUserId}.${dformat}.${ext}`;
 
-    const newPostSignatureFile = `${dformat}`;
+   // const newPostSignatureFile = `${dformat}`;
     let dirSignatureFile = `${url}${newPostSignatureFile}`;
+
+    console.log(dirSignatureFile);
+    
       var formdata = new FormData();
       console.log(formdata)
-      formdata.append("postNewSignatureFileWorkRequest", blob, 'hola.jpg');
+      formdata.append("postNewSignatureFileWorkRequest", blob, dirSignatureFile);
       this.http.post("http://localhost:4000/postNewSignatureFileWorkRequest/", formdata).subscribe((response) => {
         console.log(response)
       }); 
@@ -471,9 +535,13 @@ export class ModalPermisoDeTrabajoPage implements OnInit {
       component: ModalMedidasDeControlPage,
       componentProps:{
         'workRequestId' : newWorkRequestId,
-        'selectedMandatoryMeasures' : this.lstSelectedMandatoryMeasures
+        'selectedMandatoryMeasures' : this.lstSelectedMandatoryMeasures,
+        'lastWorkRequestValidationId' : this.lastWorkRequestValidationId
       }
     }); 
+
+    this.modalCrtl.dismiss();
+    
     await modal.present();
   }
 

@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
+import { element } from 'protractor';
 import { MandatoryMeasureOptions } from 'src/app/interfaces/measuresDetails';
+import { NewWorkRequestRelationMandatoryMeasureValidationSupplySshe } from 'src/app/models/work-request-model';
 import { WorksService } from 'src/app/services/works.service';
 import { ModalMedidasFotosPage } from '../modal-medidas-fotos/modal-medidas-fotos.page';
 
@@ -13,9 +15,12 @@ export class ModalMedidasDeControlPage implements OnInit {
   //from modal work request
   @Input() workRequestId;
   @Input() selectedMandatoryMeasures;
-
+  @Input() lastWorkRequestValidationId;
   //lst for select items
   lstMeasureOptionsAvailable : MandatoryMeasureOptions[] = []
+
+  //lst validation sshe and supply
+  lstMeasureDetailsValidation: MandatoryMeasureOptions[] = []
 
   //Grouped
   grouped: { [key: number]: MandatoryMeasureOptions[] } = {};
@@ -34,6 +39,8 @@ export class ModalMedidasDeControlPage implements OnInit {
     console.log(this.workRequestId)
     console.log(this.selectedMandatoryMeasures)
 
+  
+
     this.getMandatoryMeasureByWorkRequestSelected();
     this.getMandatoryMeasureSizeForComparision()
    
@@ -45,6 +52,9 @@ export class ModalMedidasDeControlPage implements OnInit {
     ).subscribe((data:MandatoryMeasureOptions[])=>{
       console.log("How many measure we have available")
       console.log(data)
+      this.lstMeasureDetailsValidation = data
+      console.log("Set this for validation over web")
+      console.log(this.lstMeasureDetailsValidation)
       console.log(data.length)
       this.sizeMandatoryMeasureSelected = data.length
     })
@@ -155,6 +165,14 @@ export class ModalMedidasDeControlPage implements OnInit {
 
    // go to upload evidence for begging the job
    async openEvicence(){
+
+    //post measures selected in the database
+    //They need selected all the measure for conitnue so
+    //I'll upload the measures over the validation supply and sshe
+    //and they w'll review with the evidence to approved or reject the work request
+
+    this.postValidation()
+
     console.log("a ver si cierto")
     console.log(this.workRequestId)
     console.log(this.selectedMandatoryMeasures)
@@ -165,8 +183,57 @@ export class ModalMedidasDeControlPage implements OnInit {
         'selectedMandatoryMeasures' : this.selectedMandatoryMeasures
       }
     }); 
+
+    this.modalCrtl.dismiss();
+
+    
     await modal.present();
   }
+
+  postValidation(){
+    //List to post in the table validation relation sshe and supply
+    this.lstMeasureDetailsValidation;
+    this.lastWorkRequestValidationId;
+
+    //console.log(this.lastWorkRequestValidationId[0]);
+
+    console.log("this is the list")
+    console.log(this.lstMeasureDetailsValidation)
+
+    this.lstMeasureDetailsValidation.forEach(element=>{
+      console.log("print element")
+      console.log(element)
+
+      let lol = new NewWorkRequestRelationMandatoryMeasureValidationSupplySshe 
+      //Declare empty object lol as NewWorkRequest.... structure
+      //let lol = {} as NewWorkRequestRelationMandatoryMeasureValidationSupplySshe
+
+      lol.validationSshe = 0
+      lol.validationSupply = 0
+      lol.relationWorkRequestMandatoryMeasureId = this.lastWorkRequestValidationId[0].relationWorkRequestMandatoryMeasureId;
+      lol.mandatoryMeasuresDetailsId = element.mandatoryDetailsId
+      lol.mandatoryMeasuresId = element.mandatoryMeasureId
+      lol.mandatoryMeasuresOptionId = element.mandatoryMeasureOptionId
+
+      console.log("print the relation work between the work and the validations")
+      console.log(lol)
+
+      this.worksService.postNewWorkRequestRelationMandatoryMeasureValidationSupplySshe(lol).subscribe(
+        data=>{
+          console.log(data)
+        },
+        err=>{
+          console.log("no formo el objecto correctamente")
+          console.log(err)
+        }
+      )
+
+    })
+
+
+
+  }
+
 
 
 

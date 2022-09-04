@@ -1,10 +1,11 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Agencies, CounterWorksByStatus, UserEmployeeCompany, WorkEmployeeTypes, WorkRequestByStatus } from '../interfaces/worksDetails';
+import { Agencies, CounterWorksByStatus, PostNewWorkRequestRelationMandatoryMeasureValidationSupplySshe, UserEmployeeCompany, WorkEmployeeTypes, WorkRequestByStatus } from '../interfaces/worksDetails';
 import { MandatoryMeasureOptions, MandatoryMeasures } from '../interfaces/measuresDetails';
-import { NewEvidenceModel, NewWorkRequestModel, RelationWorkRequestEmployeeTypeModel, RelationWorkRequestMandatoryMeasureModel, WorkRequestRelationUserCompanyEmployeeModel } from '../models/work-request-model';
+import { NewEvidenceModel, NewWorkRequestModel, NewWorkRequestRelationMandatoryMeasureValidationSupplySshe, RelationWorkRequestEmployeeTypeModel, RelationWorkRequestMandatoryMeasureModel, WorkRequestRelationUserCompanyEmployeeModel } from '../models/work-request-model';
 import { TrainingDetails } from '../interfaces/trainingDetails';
+import { UserCompanyDetails } from '../interfaces/userDetails';
 
 const apiKey = environment.apiKey;
 
@@ -22,6 +23,11 @@ export class WorksService {
 
   constructor( private http: HttpClient
     ) { }
+
+  //Get user details by id
+  getUserDetailsById(id: number){
+    return this.http.get<UserCompanyDetails>(`${this.url}getUserDetailsCompanyById/${id}`)
+  }
 
   getMissionPostDetailsByIdMission(id: number){
     return this.http.get<CounterWorksByStatus>(`${this.url}getCounterWorksByStatus/${id}`)
@@ -45,6 +51,14 @@ export class WorksService {
 
   getLastInsertedWorkRequest(){
     return this.http.get(`${this.url}getLastInsertedWorkRequest`)
+  }
+  
+  getLastInsertedWorkRequestRelationMandatoryMeasure(){
+    return this.http.get(`${this.url}getLastInsertedWorkRequestRelationMandatoryMeasure`)
+  }
+
+  postNewWorkRequestRelationMandatoryMeasureValidationSupplySshe(postNewWorkRelationMeasures: NewWorkRequestRelationMandatoryMeasureValidationSupplySshe){
+    return this.http.post(`${this.url}postNewWorkRequestRelationMandatoryMeasureValidationSupplySshe`, postNewWorkRelationMeasures, {responseType: 'text'});
   }
   
   postNewWorkRequest(postNewWorkRequest : NewWorkRequestModel){

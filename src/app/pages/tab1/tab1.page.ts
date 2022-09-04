@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';import { ModalController } from '@ionic/angular';
+import { Component } from '@angular/core';import { ModalController, NavController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
+import { UserCompanyDetails } from 'src/app/interfaces/userDetails';
 import { CounterWorksByStatus } from 'src/app/interfaces/worksDetails';
 import { WorksService } from 'src/app/services/works.service';
 import { ModalListaDeTrabajosPage } from './modal-lista-de-trabajos/modal-lista-de-trabajos.page';
@@ -12,9 +14,14 @@ import { ModalPermisoDeTrabajoPage } from './modal-permiso-de-trabajo/modal-perm
 })
 export class Tab1Page {
 
+
+  userCompanyDetails: UserCompanyDetails;
+
   counterWorksByStatus : CounterWorksByStatus
   lstCounterWorksByStatus: CounterWorksByStatus[] = []
   constructor(private modalCrtl: ModalController,
+              private storage: Storage,
+              private navCtrl: NavController,
               private worksService: WorksService) {}
 
   //Id user from ionic storage
@@ -24,10 +31,34 @@ export class Tab1Page {
 
   ngOnInit(){
 
+    //Add input variable coming from login for this action with the user id logged
+    this.getUserIdFromStorage();
     this.getCounterWorksByStatus()
     // esto es para cuando agreguegemos los usuarios y login
     //this.getUserIdFromStorage();
 
+  }
+
+  getUserIdFromStorage(){
+    this.storage.get('idUserFromDb').then((val)=>{
+      if(val != null ){
+        console.log('Your id from db storage is home ', val);
+      // this.idUserFromStorage = val; wait I need implements the login before 
+      //In awhile I'll pass fix id param with 5
+       this.userDetailsLoggedById(5)
+      // this.nextEvents(); refresh the page when pull down
+      }else{
+        this.navCtrl.navigateRoot('/login');
+      }
+    })
+  }
+
+  userDetailsLoggedById(id){
+    this.worksService.getUserDetailsById(id).subscribe((data: UserCompanyDetails)=>{
+      this.userCompanyDetails = data[0]
+      console.log(this.userCompanyDetails);
+      console.log(this.userCompanyDetails.jobManager)
+    })
   }
 
   getCounterWorksByStatus(){

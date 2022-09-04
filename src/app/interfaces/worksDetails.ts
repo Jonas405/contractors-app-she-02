@@ -45,5 +45,13 @@ export interface CounterWorksByStatus {
     dirPost: string;
     dirPostExt: string;
  }
+
+export interface PostNewWorkRequestRelationMandatoryMeasureValidationSupplySshe{
+  id:number;
+  relationWorkRequestMandatoryMeasureId: number;
+  validationSupply: number;
+  validationSshe: number;
+  mandatoryMeasuresDetailsId: number;
+}
   
 
