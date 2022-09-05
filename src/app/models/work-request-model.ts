@@ -35,10 +35,10 @@ export class WorkRequestRelationUserCompanyEmployeeModel{
 export class NewEvidenceModel{
     workRequestId?:             number;
     userCompanyEmployeeId?:        number;
-    title?:     string;
+    comment?:     string;
     details?:   string;
     date?:      string;
-    dirEvidence?:   string;
+    dirEvidenceFile?:   string;
 
 }
 

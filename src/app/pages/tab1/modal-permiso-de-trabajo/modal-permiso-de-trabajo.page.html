@@ -208,14 +208,13 @@
   </div>
 
 <!-- signature box -->
-<p>Hermano QLQ:</p>
-<p>Firma del responsable:</p>
+<!-- <p>Firma del responsable:</p>-->
+
 <signature-pad [options]="signaturePadOptions" id="signatureCanvas"></signature-pad>
 <ion-grid>
   <ion-row>
-  
     <ion-col col-4>
-      <ion-button full color="secondary" (click)="drawCompleted()" >Guardar</ion-button>
+      <ion-button full color="primary" (click)="drawClear()" >Limpiar</ion-button>
     </ion-col> 
   </ion-row>
 </ion-grid>
@@ -225,4 +224,4 @@
 
 
 
-<ion-button size="full" color="secondary" (click)="uploadWorkRequest()">Medidas de solicitud obligatorias</ion-button>
+<ion-button size="full" color="secondary" (click)="drawCompleted()">Medidas de solicitud obligatorias</ion-button>

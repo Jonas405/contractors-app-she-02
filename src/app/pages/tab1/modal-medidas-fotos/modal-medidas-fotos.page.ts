@@ -307,14 +307,18 @@ async makeVideoIntoBlobUploadToServer(imagePath) {
       let datenow = new Date();
       let dformat = datenow.toISOString().replace("T"," ").substring(0, 19);
       const newPostFile = `${this.workRequestId}.${dformat}.${ext}`;
-      this.newEvidence.dirEvidence = `${url}${newPostFile}`;
+      this.newEvidence.dirEvidenceFile = `${url}${newPostFile}`;
         var formdata = new FormData();    
         formdata.append("postNewEvidenceWorkFileRequest", event.body,newPostFile)
         //Here I need add the direction endpoint where I'll send the file
         this.http.post("http://192.168.0.3:4000/postNewEvidenceWorkFileRequest", formdata).subscribe((response) => {
         console.log(response)
         this.dismiss()
-        this.PostDataBase(this.newEvidence.dirEvidence)  
+        this.PostDataBase(this.newEvidence.dirEvidenceFile)  
+         //Clear file present to show another time share evidency
+        this.files.forEach(element=>{
+          this.deleteFile(element)
+            })
       }); 
       }
     }) 
@@ -344,7 +348,7 @@ async makeVideoIntoBlobUploadToServer(imagePath) {
       console.log(url);
       console.log("este es el objeto");
       console.log(newPostFile)
-      this.newEvidence.dirEvidence = `${url}${newPostFile}`;
+      this.newEvidence.dirEvidenceFile = `${url}${newPostFile}`;
 
       console.log(this.newEvidence);
 
@@ -354,7 +358,11 @@ async makeVideoIntoBlobUploadToServer(imagePath) {
       console.log(formdata)
       this.http.post("http://192.168.0.3:4000/postNewEvidenceWorkFileRequest", formdata).subscribe((response) => {
       this.dismiss()
-      this.PostDataBase(this.newEvidence.dirEvidence)  
+      this.PostDataBase(this.newEvidence.dirEvidenceFile)  
+      //Clear file present to show another time share evidency
+      this.files.forEach(element=>{
+        this.deleteFile(element)
+      })
       
       }); 
       }
@@ -369,10 +377,10 @@ async makeVideoIntoBlobUploadToServer(imagePath) {
   console.log(this.workRequestId)
 
   this.newEvidence.workRequestId = this.workRequestId
-  this.newEvidence.dirEvidence = dirPost
+  this.newEvidence.dirEvidenceFile = dirPost
   console.log("Upload evidence ")
-  console.log("Upload evidence comment  "+this.newEvidence.title)
-  console.log("Upload evidence url file"+this.newEvidence.dirEvidence)
+  console.log("Upload evidence comment  "+this.newEvidence.comment)
+  console.log("Upload evidence url file"+this.newEvidence.dirEvidenceFile)
   console.log("Upload evidence id work request "+this.newEvidence.workRequestId)
   console.log("Upload post "+this.newEvidence.date) 
   this.newEvidence.userCompanyEmployeeId = 5
@@ -390,7 +398,7 @@ async makeVideoIntoBlobUploadToServer(imagePath) {
   this.isLoading = true;
   return await this.loadingController.create({
     cssClass: 'my-custom-class',
-    message: 'Publicando...'
+    message: 'Publicando... Puede compartir hasta 10 fotos o vìdeos.'
   }).then(a => {
     a.present().then(() => {
       console.log('presented');

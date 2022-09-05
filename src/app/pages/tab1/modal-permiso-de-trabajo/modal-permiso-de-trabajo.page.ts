@@ -255,16 +255,9 @@ export class ModalPermisoDeTrabajoPage implements OnInit {
   }
 
   uploadWorkRequest(){
-
-    //Here I'll added the work dir path where I was upload the signatur
-    this.drawCompleted();
-
-
     console.log("this is the object")
    
     this.workRequestModel.companyId = 1
-    this.workRequestModel.workSignatureDir ="por agregar"
-
     let datenow = new Date();
     let dformat = datenow.toISOString().replace("T"," ").substring(0, 19);
     this.workRequestModel.createdAt = dformat
@@ -273,8 +266,11 @@ export class ModalPermisoDeTrabajoPage implements OnInit {
     //This is the principal model to upload work request
 
     //User logged
-    this.workRequestModel.companyUserId = this.userCompanyDetails.jobManagerCompanyUserId;
-    this.workRequestModel.companyId = this.userCompanyDetails.companyId;
+   // this.workRequestModel.companyUserId = this.userCompanyDetails.jobManagerCompanyUserId;
+   this.workRequestModel.companyUserId = 5
+   //this.workRequestModel.companyId = this.userCompanyDetails.companyId;
+   this.workRequestModel.companyId = 1
+   
 
     console.log("Este es el modelo a enviar con la info")
     console.log(this.workRequestModel)
@@ -462,26 +458,21 @@ export class ModalPermisoDeTrabajoPage implements OnInit {
     //recommended for try to homologate all upload folders
     console.log("inside the draw completed")
     console.log(this.signatureImage)
-    
-    this.signatureImage = this.signaturePad.toDataURL()
-  //  console.log(this.signatureImage)
-  //  console.log(typeof this.signatureImage)
 
-    console.log("print something for m")
-    console.log(this.signatureImage)
+     //----------------- Ionic upload signature path convert signature to image
 
+    const dataURL = this.signaturePad.toDataURL('image/png');
+    const data = atob(dataURL.substring('data:image/png;base64,'.length)),
+      asArray = new Uint8Array(data.length);
 
-    //upload image to server 
-    const base64 = this.signaturePad.toDataURL('image/png');
-    const blob = this.base64toBlob(base64)
+    for (var i = 0, len = data.length; i < len; ++i) {
+      asArray[i] = data.charCodeAt(i);
+    }
 
-    //Aqui tengo la imagen de la firma en blob!
+    const blob = new Blob([asArray], { type: 'image/png' });
 
-    this.workRequestModel.workSignatureDir = base64;
-    console.log("this is blob");
+   //----------------- Ionic upload signature path convert signature to image
     console.log(blob)
-    console.log("this is base64")
-    console.log(base64)
 
     //upload signature file to server with date and ID
     let url = 'https://www.domappssuiteservices.com/contractors/request-work-signatures/'
@@ -491,7 +482,10 @@ export class ModalPermisoDeTrabajoPage implements OnInit {
     //I'll login and with the company_users in this part of the app for work request
     //Just company user can do it a work request
     const ext = "png"
-    const newPostSignatureFile = `${this.userCompanyDetails.jobManagerCompanyUserId}.${dformat}.${ext}`;
+   // const companyUserId = this.userCompanyDetails.jobManagerCompanyUserId
+   const companyUserId = 5
+    const newPostSignatureFile = `${companyUserId}.${dformat}.${ext}`;
+    console.log(newPostSignatureFile)
 
    // const newPostSignatureFile = `${dformat}`;
     let dirSignatureFile = `${url}${newPostSignatureFile}`;
@@ -501,8 +495,14 @@ export class ModalPermisoDeTrabajoPage implements OnInit {
       var formdata = new FormData();
       console.log(formdata)
       formdata.append("postNewSignatureFileWorkRequest", blob, dirSignatureFile);
-      this.http.post("http://localhost:4000/postNewSignatureFileWorkRequest/", formdata).subscribe((response) => {
+    // pruebas fisicas 
+          this.http.post("http://192.168.0.3:4000/postNewSignatureFileWorkRequest", formdata).subscribe((response) => {
+    //    this.http.post("http://localhost:4000/postNewSignatureFileWorkRequest", formdata).subscribe((response) => {
         console.log(response)
+        //Here I already upload the file so I'll get call the method to generate request
+        this.workRequestModel.workSignatureDir = dirSignatureFile
+        this.uploadWorkRequest()
+        
       }); 
 
   }

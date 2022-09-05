@@ -1,7 +1,7 @@
 <ion-header>
-  <ion-toolbar>
+
     <ion-title>Cargar evidencias de cumplimiento</ion-title>
-  </ion-toolbar>
+
 </ion-header>
  
 
@@ -13,7 +13,7 @@
 
     <ion-item>
       <ion-label position="floating">Comentarios:</ion-label>
-        <ion-textarea type="text" value ="" [(ngModel)]="newEvidence.title" required></ion-textarea>
+        <ion-textarea type="text" value ="" [(ngModel)]="newEvidence.comment" required></ion-textarea>
       </ion-item>
 
   
@@ -44,7 +44,7 @@
             </ng-template>
 
             <div *ngIf="f">
-              <ion-button class="center" (click)="uploadFileToServer(f)" (click)="present()" color="success">Compartir!</ion-button>
+              <ion-button class="center" (click)="uploadFileToServer(f)" (click)="present()" color="success">Compartir</ion-button>
             </div>
           </ion-card-content>
         </ion-card>
@@ -65,7 +65,7 @@
 
 <ion-footer>
   <ion-button (click)="closeScheduleModal()" expand="block"  color="primary">
-    Regresar al inicio
+    Culminar solicitud
   </ion-button>
 </ion-footer>
 
