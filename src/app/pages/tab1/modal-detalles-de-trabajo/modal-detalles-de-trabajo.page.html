@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>modal-detalles-de-trabajo</ion-title>
+    <ion-title>Detalles de trabajo</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -44,11 +44,124 @@
           de su apto medico con la fecha del dìa legible.
         </ion-text>
         <section>
-          <ion-button (click)="openModalForRecordedVideoAndUploadEvidenceApto()" expand="block">Subir apto medico y declaración jurada</ion-button>
+          <ion-button (click)="openModalForRecordedVideoAndUploadEvidenceApto()" expand="block">Subir archivos</ion-button>
         </section>
       </ion-card-header>
     </ion-card>
+
+    <ion-footer>
+      <ion-button (click)="closeScheduleModal()" expand="block"  color="primary">
+        Volver
+      </ion-button>
+    </ion-footer>
+ </div>
+
+  <div *ngIf="statusId==2">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Folio:{{workRequestId}}</ion-card-title>
+        <ion-card-subtitle>Responsable: {{workSelectedDetails?.nameCompanyRes}}</ion-card-subtitle>
+        <ion-card-subtitle>Estatus: {{statusName}}</ion-card-subtitle>
+        <ion-card-subtitle>Agencia: {{workSelectedDetails?.agency}}</ion-card-subtitle>
+        <ion-card-subtitle></ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        Descripciòn: {{workSelectedDetails?.workDescription}}
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Subir evidencias de avance</ion-card-title>   
+        <ion-text>
+          Al seleccionar podra subir todas las evidencias de avance o pruebas de culminacion fotograficas o vìdeos del trabajo
+        </ion-text>
+        <section>
+          <ion-button (click)="openModalForUploadWorkEvidence()" expand="block">Subir evidencias</ion-button>
+        </section>
+      </ion-card-header>
+    </ion-card>
+
+    <ion-footer>
+      <ion-button (click)="closeScheduleModal()" expand="block"  color="primary">
+        Volver
+      </ion-button>
+    </ion-footer>
+ </div>
+
+ <div *ngIf="statusId==3">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Folio:{{workRequestId}}</ion-card-title>
+      <ion-card-subtitle>Responsable: {{workSelectedDetails?.nameCompanyRes}}</ion-card-subtitle>
+      <ion-card-subtitle>Estatus: {{statusName}}</ion-card-subtitle>
+      <ion-card-subtitle>Agencia: {{workSelectedDetails?.agency}}</ion-card-subtitle>
+      <ion-card-subtitle></ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      Descripciòn: {{workSelectedDetails?.workDescription}}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Subir evidencias de avance</ion-card-title>   
+      <ion-text>
+        Al seleccionar podra subir todas las evidencias de avance o pruebas de culminacion fotograficas o vìdeos del trabajo
+      </ion-text>
+      <section>
+        <ion-button (click)="openModalForUploadWorkEvidence()" expand="block">Subir evidencias</ion-button>
+      </section>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-footer>
+    <ion-button (click)="closeScheduleModal()" expand="block"  color="primary">
+      Volver
+    </ion-button>
+  </ion-footer>
 </div>
+
+<div *ngIf="statusId==4">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Folio:{{workRequestId}}</ion-card-title>
+      <ion-card-subtitle>Responsable: {{workSelectedDetails?.nameCompanyRes}}</ion-card-subtitle>
+      <ion-card-subtitle>Estatus: {{statusName}}</ion-card-subtitle>
+      <ion-card-subtitle>Agencia: {{workSelectedDetails?.agency}}</ion-card-subtitle>
+      <ion-card-subtitle></ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      Descripciòn: {{workSelectedDetails?.workDescription}}
+    </ion-card-content>
+  </ion-card>
+  <ion-footer>
+    <ion-button (click)="closeScheduleModal()" expand="block"  color="primary">
+      Volver
+    </ion-button>
+  </ion-footer>
+</div>
+
+<div *ngIf="statusId==5">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Folio:{{workRequestId}}</ion-card-title>
+      <ion-card-subtitle>Responsable: {{workSelectedDetails?.nameCompanyRes}}</ion-card-subtitle>
+      <ion-card-subtitle>Estatus: {{statusName}}</ion-card-subtitle>
+      <ion-card-subtitle>Agencia: {{workSelectedDetails?.agency}}</ion-card-subtitle>
+      <ion-card-subtitle></ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      Descripciòn: {{workSelectedDetails?.workDescription}}
+    </ion-card-content>
+  </ion-card>
+  <ion-footer>
+    <ion-button (click)="closeScheduleModal()" expand="block"  color="primary">
+      Volver
+    </ion-button>
+  </ion-footer>
+</div>
+</ion-content>
 <!-- 
 
 
@@ -102,7 +215,7 @@
 </div>
 
  -->
-</ion-content>
+
 
 
 

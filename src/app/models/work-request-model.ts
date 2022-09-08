@@ -58,3 +58,13 @@ export class NewWorkRequestRelationMandatoryMeasureValidationSupplySshe{
     anwser: number;
   }
 
+  export class NewEvaluation{
+    id: number;
+    questionId: number;
+    answerId: number;
+    scoring: number;
+    workRequestId: number;
+    userCompanyEmployeeId: number;
+    date:string;
+}
+

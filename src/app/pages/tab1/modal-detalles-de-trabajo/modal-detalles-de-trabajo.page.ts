@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { WorkDetails } from 'src/app/interfaces/worksDetails';
 import { WorksService } from 'src/app/services/works.service';
 import { ModalCapacitacionesPage } from '../modal-capacitaciones/modal-capacitaciones.page';
@@ -23,7 +23,8 @@ export class ModalDetallesDeTrabajoPage implements OnInit {
   
   //When work request has already approved all the employees need take a training before start the job
   constructor(private modalCrtl: ModalController,
-              private worksService: WorksService) { }
+              private worksService: WorksService,
+              private navCtrl: NavController) { }
 
   //I'll apply status 1 -> Pendiente -> Capacitacion - Juramento grabado - apto medico
   //           status 2 -> Aprobado -> Subir evidencia
@@ -94,6 +95,23 @@ export class ModalDetallesDeTrabajoPage implements OnInit {
     await modal.present();
   }
 
+  async openModalForUploadWorkEvidence(){
+      //console.log("enable navigate over all view with the id")
+    //console.log(this.workRequestId)
+    //console.log(this.selectedMandatoryMeasures)
+    const modal = await this.modalCrtl.create({
+      component: ModalMedidasFotosPage,
+      componentProps:{
+        'statusId': this.statusId,
+        'statusName':this.statusName,
+        'workRequestId':this.workRequestId,
+        'workEvidence': "workEvidenceApproved"
+      }
+    }); 
+    await modal.present();
+
+  }
+
 
 
   async openModalMandatoryTrainingByWorkType(){
@@ -113,4 +131,8 @@ export class ModalDetallesDeTrabajoPage implements OnInit {
     await modal.present();
   }
 
+  closeScheduleModal(){
+    this.modalCrtl.dismiss();
+    this.navCtrl.navigateRoot('/tabs/tab1');
+  }
 }

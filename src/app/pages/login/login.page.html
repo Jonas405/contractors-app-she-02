@@ -1,0 +1,80 @@
+
+<ion-content background="primary">
+  <ion-slides class="mainSlide" #slideMain>
+    
+    <ion-slide>
+      <form (ngSubmit)="login(fLogin)" #fLogin="ngForm">
+        <ion-grid fixed>
+
+          <ion-row class="ion-justify-content-center">
+            <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
+              <h1>Familiapp SSHE</h1>
+              <div class="login-logo">
+                <img src="../../../assets/familia_she.png" >
+              </div>
+            </ion-col>
+          </ion-row>
+        
+          <ion-row>
+            <ion-col>
+              
+                <ion-list>
+                  
+                  <ion-item class="roundedInput8px margin-bottom-15 ">
+                    <ion-label>
+                      <ion-icon color="medium" name="key-outline"></ion-icon>
+                    </ion-label>
+                    <ion-input name="idUnilever"
+                                placeholder="Número de empleado"
+                                [(ngModel)]="user.idUnilever"
+                                required></ion-input>
+                  </ion-item>
+
+                  <ion-item class="roundedInput8px margin-bottom-20">
+                    <ion-label>
+                      <ion-icon color="medium" name="lock-closed-outline"></ion-icon>
+                    </ion-label>
+                    <ion-input 
+                               placeholder="Password" [type]="showPassword ? 'text' : 'password'" clearOnEdit="false"
+                                name="password"
+                                type="password"
+                                [(ngModel)]="user.password"
+                                required>
+                              </ion-input>
+
+                                <!-- ### Show/hide password ### -->
+            <div (click)="onPasswordToggle()" ion-button fill="clear" size="small">
+              <ion-icon slot="icon-only" color="medium" [name]="showPassword ? 'eye-off' : 'eye'"></ion-icon>
+            </div>
+                  </ion-item>
+             
+                  <!-- ############ -->
+         
+                  
+                </ion-list>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-button 
+                          mode="ios" class="ion-margin-top" 
+                          expand="block"
+                          type="submit"
+                          color="primary"
+                          shape="round">
+                Ingresar
+              </ion-button>
+              <ion-text color="primary">
+                <p class="ion-text-center ion-margin-bottom main-header8">
+                  Oprimiendo ingresar, aceptas todas las condiciones y servicios sin reservaciones.
+                </p>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+
+        </ion-grid>
+      </form>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

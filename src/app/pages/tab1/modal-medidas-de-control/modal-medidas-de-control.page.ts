@@ -180,7 +180,8 @@ export class ModalMedidasDeControlPage implements OnInit {
       component: ModalMedidasFotosPage,
       componentProps:{
         'workRequestId' : this.workRequestId,
-        'selectedMandatoryMeasures' : this.selectedMandatoryMeasures
+        'selectedMandatoryMeasures' : this.selectedMandatoryMeasures,
+        'mandatoryMeasuesEvidence':"mandatoryMeasureEvidence"
       }
     }); 
 

@@ -32,6 +32,14 @@ export class ModalMedidasFotosPage implements OnInit {
     //'MedicalAndDeclaration': "declaration"
     @Input() MedicalAndDeclaration;
 
+    //For modal when open from upload work evidence need received this parameters
+    //'workEvidence': "workEvidenceApproved"
+    @Input() workEvidence;
+
+    //For modal when open from measure evidenc need received this parameter
+    //  'mandatoryMeasuesEvidence':"mandatoryMeasureEvidence"
+    @Input() mandatoryMeasuesEvidence;
+
     //pick photo from gallery 
   galleryOptions: CameraOptions = {
     sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
@@ -77,6 +85,9 @@ export class ModalMedidasFotosPage implements OnInit {
 
     console.log("QLQ")
     console.log(this.MedicalAndDeclaration)
+
+    console.log("Work evidence")
+    console.log(this.workEvidence)
 
     this.files.forEach(element=>{
       this.deleteFile(element)
@@ -312,7 +323,6 @@ async makeVideoIntoBlobUploadToServer(imagePath) {
     if(event.type === HttpEventType.Response){
 
       //------- if to validate if they are comming to evidence measures or medical declaration
-
       if(this.MedicalAndDeclaration == 'declaration'){
         //-------- This is for medical declaration
         let url ='https://www.domappssuiteservices.com/contractors/medical-declaration-employees/'
@@ -333,8 +343,9 @@ async makeVideoIntoBlobUploadToServer(imagePath) {
             this.deleteFile(element)
               })
         }); 
-
-      }else{
+      }
+      
+      if(this.mandatoryMeasuesEvidence == 'mandatoryMeasureEvidence'){
         //-------- This is for evidence measures  ----------------------------------------------
         let url ='https://www.domappssuiteservices.com/contractors/evidence-mandatory-measures/'
         const ext = this.pathToUpload.split('.').pop();
@@ -356,6 +367,30 @@ async makeVideoIntoBlobUploadToServer(imagePath) {
         }); 
         //-----------------------------------------
       }
+
+      if(this.workEvidence == 'workEvidenceApproved'){
+        //-------- This is for evidence measures  ----------------------------------------------
+        let url ='https://www.domappssuiteservices.com/contractors/evidence-work-approved-advance/'
+        const ext = this.pathToUpload.split('.').pop();
+        let datenow = new Date();
+        let dformat = datenow.toISOString().replace("T"," ").substring(0, 19);
+        const newPostFile = `${this.workRequestId}.${dformat}.${ext}`;
+        this.newEvidence.dirEvidenceFile = `${url}${newPostFile}`;
+          var formdata = new FormData();    
+          formdata.append("postNewEvidenceWorkFileRequest", event.body,newPostFile)
+          //Here I need add the direction endpoint where I'll send the file
+          this.http.post("http://192.168.0.3:4000/postNewApprovedWorkEvidenceAdvanceFileRequest", formdata).subscribe((response) => {
+          console.log(response)
+          this.dismiss()
+          this.PostDataBaseEvidenceWorkApprovedAdvance(this.newEvidence.dirEvidenceFile)  
+          //Clear file present to show another time share evidency
+          this.files.forEach(element=>{
+            this.deleteFile(element)
+              })
+        }); 
+        //-----------------------------------------
+      }
+
      }
     }) 
   }
@@ -395,8 +430,8 @@ async makeVideoIntoBlobUploadToServer(imagePath) {
               this.deleteFile(element)
                 })
           }); 
-  
-        }else{
+        }
+        if(this.mandatoryMeasuesEvidence == 'mandatoryMeasureEvidence'){
           //-------- This is for evidence measures  ----------------------------------------------
           let url ='https://www.domappssuiteservices.com/contractors/evidence-mandatory-measures/'
           const ext = finalImgPath.split('.').pop();
@@ -426,8 +461,54 @@ async makeVideoIntoBlobUploadToServer(imagePath) {
           })
           }); 
         }
+        if(this.workEvidence == 'workEvidenceApproved'){
+          //-------- This is for evidence measures  ----------------------------------------------
+          let url ='https://www.domappssuiteservices.com/contractors/evidence-work-approved-advance/'
+          const ext = this.pathToUpload.split('.').pop();
+          let datenow = new Date();
+          let dformat = datenow.toISOString().replace("T"," ").substring(0, 19);
+          const newPostFile = `${this.workRequestId}.${dformat}.${ext}`;
+          this.newEvidence.dirEvidenceFile = `${url}${newPostFile}`;
+            var formdata = new FormData();    
+            formdata.append("postNewEvidenceWorkFileRequest", event.body,newPostFile)
+            //Here I need add the direction endpoint where I'll send the file
+            this.http.post("http://192.168.0.3:4000/postNewApprovedWorkEvidenceAdvanceFileRequest", formdata).subscribe((response) => {
+            console.log(response)
+            this.dismiss()
+            this.PostDataBaseEvidenceWorkApprovedAdvance(this.newEvidence.dirEvidenceFile)  
+            //Clear file present to show another time share evidency
+            this.files.forEach(element=>{
+              this.deleteFile(element)
+                })
+          }); 
+          //-----------------------------------------
+        }
       }
     })
+  }
+
+  PostDataBaseEvidenceWorkApprovedAdvance(dirPost){
+    let datenow = new Date();
+    this.newEvidence.date = datenow.toISOString().replace("T"," ").substring(0, 19);
+   
+    console.log("este es el id requests antres de subir evidencia")
+    console.log(this.workRequestId)
+  
+    this.newEvidence.workRequestId = this.workRequestId
+    this.newEvidence.dirEvidenceFile = dirPost
+    console.log("Upload evidence ")
+    console.log("Upload evidence comment  "+this.newEvidence.comment)
+    console.log("Upload evidence url file"+this.newEvidence.dirEvidenceFile)
+    console.log("Upload evidence id work request "+this.newEvidence.workRequestId)
+    console.log("Upload post "+this.newEvidence.date) 
+    this.newEvidence.userCompanyEmployeeId = 5
+    console.log(this.newEvidence)
+       this.worksService.postNewApprovedWorkEvidenceAdvance(this.newEvidence).subscribe(data=>{
+        console.log(data)
+        this.files.forEach(element=>{
+          this.deleteFile(element)
+        })
+       })
   }
 
  PostDataBase(dirPost){
@@ -450,7 +531,6 @@ async makeVideoIntoBlobUploadToServer(imagePath) {
       console.log(data)
       this.files.forEach(element=>{
         this.deleteFile(element)
-        this.closeScheduleModal()
       })
      })
  }
@@ -474,7 +554,6 @@ async makeVideoIntoBlobUploadToServer(imagePath) {
       console.log(data)
       this.files.forEach(element=>{
         this.deleteFile(element)
-        this.closeScheduleModal()
       })
      })
  }

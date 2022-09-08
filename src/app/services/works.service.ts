@@ -111,6 +111,19 @@ export class WorksService {
     return this.http.post(`${this.url}postNewEmployeeMedicalEvidence`, newEvidence, {responseType: 'text'});
   }
 
+  //post new evaluation
+  postNewEvaluation(newEvaluation){
+    this.newPostEmitter.emit(newEvaluation)
+    console.log(newEvaluation)
+    return this.http.post(`${this.url}postNewEvaluation`, newEvaluation, {responseType: 'text'});
+  }
+  //post new evidence over approved work request advance
+  postNewApprovedWorkEvidenceAdvance(newEvidence){
+    this.newPostEmitter.emit(newEvidence)
+    console.log(newEvidence)
+    return this.http.post(`${this.url}postNewApprovedWorkEvidenceAdvance`, newEvidence, {responseType: 'text'});
+  }
+  
   //Need adjust to videos share by manu
   getTrainingDetails(){
     return this.http.get<TrainingDetails[]>(`${this.url}getTrainingDetails`)

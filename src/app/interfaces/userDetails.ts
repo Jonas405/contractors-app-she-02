@@ -10,3 +10,18 @@ export interface UserCompanyDetails{
     companyRfc: string;
     companyPassword: string;
 }
+
+export interface UserCompanyEmployee{
+        id	: number;
+        name: string;	
+        surname	: string;
+        rfc	: string;
+        email	: string;
+        password	: string;
+        createdAt	: string;
+        companyId	: number
+        companyName: string;
+        companyEmployeeJobRoleId	: number
+        companyEmployeeJobRole: string
+        location: string;
+}

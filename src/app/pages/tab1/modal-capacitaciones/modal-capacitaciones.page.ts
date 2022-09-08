@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AlertController, ModalController, NavController } from '@ionic/angular';
 import { EvaluationDetails, SelectedAnswer, TrainingDetails } from 'src/app/interfaces/trainingDetails';
 import { WorkDetails } from 'src/app/interfaces/worksDetails';
+import { NewEvaluation } from 'src/app/models/work-request-model';
 import { WorksService } from 'src/app/services/works.service';
 
 @Component({
@@ -97,6 +98,7 @@ export class ModalCapacitacionesPage implements OnInit {
 
   shareEvaluation(){
     let scoring = 0;
+
     this.cleaningLstAnswer.forEach(element => {
       if(element.question == 1){
         if(element.anwser == 1 ){
@@ -160,12 +162,40 @@ export class ModalCapacitacionesPage implements OnInit {
 
     });
 
+    this.uploadEvaluation(this.cleaningLstAnswer, scoring);
+
     console.log(scoring)
     //Upload the scoring to the database and give another try
     console.log(this.cleaningLstAnswer)
     console.log(scoring)
 
     this.closeScheduleModal(scoring)
+  }
+
+  uploadEvaluation(lstSelected, scoring){
+
+    lstSelected.forEach(element => {
+      console.log(element)
+      console.log(element.questionId)
+      console.log(element.answerId)
+
+      let datenow = new Date();
+
+
+      let newEvaluation = {} as NewEvaluation;
+      newEvaluation.questionId = element.question
+      newEvaluation.answerId = element.anwser
+      newEvaluation.scoring = scoring
+      newEvaluation.workRequestId = this.workRequestId
+      newEvaluation.userCompanyEmployeeId = 5 //Need add the user here from the navigation view
+      newEvaluation.date =  datenow.toISOString().replace("T"," ").substring(0, 19);
+
+      this.worksService.postNewEvaluation(newEvaluation).subscribe(data=>{
+          console.log(data)
+        }
+      )
+    });
+
   }
   
   closeScheduleModal(scoring){
@@ -175,11 +205,11 @@ export class ModalCapacitacionesPage implements OnInit {
 
   async presentAlert(scoring) {
 
-    if(scoring > 80){
+    if(scoring > 79){
       const alert = this.alertController.create({
         header: 'Capacitación completada!',
         subHeader: '¡Mensaje importante!',
-        message: 'Obtuviste una calificación de ' + scoring + 'aprobaste con éxito felicidades!',
+        message: 'Obtuviste una calificación de ' + scoring + ' aprobaste con éxito felicidades!',
         buttons: ['OK'],
       });
       await (await alert).present();

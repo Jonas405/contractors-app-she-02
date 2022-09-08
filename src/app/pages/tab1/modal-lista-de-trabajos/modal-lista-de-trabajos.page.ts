@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { WorkRequestByStatus } from 'src/app/interfaces/worksDetails';
 import { WorksService } from 'src/app/services/works.service';
 import { ModalDetallesDeTrabajoPage } from '../modal-detalles-de-trabajo/modal-detalles-de-trabajo.page';
@@ -17,7 +17,8 @@ export class ModalListaDeTrabajosPage implements OnInit {
   workRequestLst: WorkRequestByStatus [] = []
 
   constructor(private modalCrtl: ModalController,
-              private worksService: WorksService) { }
+              private worksService: WorksService,
+              private navCtrl: NavController) { }
 
   ngOnInit() {
     this.getWorksDetailsByStatusId(this.statusId)
@@ -52,6 +53,12 @@ export class ModalListaDeTrabajosPage implements OnInit {
       }
     }); 
     await modal.present();
+  }
+
+
+  closeScheduleModal(){
+    this.modalCrtl.dismiss();
+    this.navCtrl.navigateRoot('/tabs/tab1');
   }
 
 }
