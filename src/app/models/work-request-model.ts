@@ -11,6 +11,7 @@ export class NewWorkRequestModel{
     workDescription?:           string;
     workRiskDescription?:       string;
     workTitle?:                 string;
+    workTypes?:                 number;
     workRequestStatusId?:       number;
     specialRecomendations?:     string;
     companyUserId: number;
@@ -52,6 +53,8 @@ export class NewWorkRequestRelationMandatoryMeasureValidationSupplySshe{
   }
     
 
-
-
+  export class SelectedAnswer {
+    question:number;
+    anwser: number;
+  }
 

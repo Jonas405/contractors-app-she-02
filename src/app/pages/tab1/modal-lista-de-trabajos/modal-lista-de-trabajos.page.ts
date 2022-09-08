@@ -42,10 +42,13 @@ export class ModalListaDeTrabajosPage implements OnInit {
     
   }
 
-  async openSelectedWorkDetails(){
+  async openSelectedWorkDetails(workRequestId){
     const modal = await this.modalCrtl.create({
       component: ModalDetallesDeTrabajoPage,
       componentProps:{
+        'statusId': this.statusId,
+        'statusName':this.statusName,
+        'workRequestId':workRequestId
       }
     }); 
     await modal.present();

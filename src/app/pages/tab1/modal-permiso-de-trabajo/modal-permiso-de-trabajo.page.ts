@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, NgForm } from '@angular/forms';
-import { IonDatetime, ModalController, NavController } from '@ionic/angular';
+import { IonDatetime, LoadingController, ModalController, NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { SignaturePad } from 'angular2-signaturepad';
 import { format, parseISO } from 'date-fns';
@@ -62,11 +62,14 @@ export class ModalPermisoDeTrabajoPage implements OnInit {
   idUserFromStorage: number;
   userCompanyDetails: UserCompanyDetails;
 
+  isLoading = false;
+
   constructor(
     private modalCrtl: ModalController,
     private http: HttpClient,
     private storage: Storage,
     private navCtrl: NavController,
+    private loadingController: LoadingController,
     private worksService: WorksService) {
     this.setToday()
    }
@@ -193,6 +196,7 @@ export class ModalPermisoDeTrabajoPage implements OnInit {
       let selectedTypeWorks = event.detail.value
       let lul = selectedTypeWorks.split("-").slice(1)
       console.log(lul)
+      this.workRequestModel.workTypes = parseInt(lul[0])
       this.lstSelectedMandatoryMeasures.push(lul)
       console.log(this.lstSelectedMandatoryMeasures)
     }else{
@@ -202,6 +206,7 @@ export class ModalPermisoDeTrabajoPage implements OnInit {
       let selectedTypeWorks = event.detail.value
       let lul = selectedTypeWorks.split("-").slice(1)
       console.log(lul)
+      this.workRequestModel.workTypes = parseInt(lul[0])
       this.lstSelectedMandatoryMeasures.push(lul)
       console.log(this.lstSelectedMandatoryMeasures)
     }
@@ -499,6 +504,7 @@ export class ModalPermisoDeTrabajoPage implements OnInit {
           this.http.post("http://192.168.0.3:4000/postNewSignatureFileWorkRequest", formdata).subscribe((response) => {
     //    this.http.post("http://localhost:4000/postNewSignatureFileWorkRequest", formdata).subscribe((response) => {
         console.log(response)
+        this.dismiss();
         //Here I already upload the file so I'll get call the method to generate request
         this.workRequestModel.workSignatureDir = dirSignatureFile
         this.uploadWorkRequest()
@@ -545,6 +551,26 @@ export class ModalPermisoDeTrabajoPage implements OnInit {
     await modal.present();
   }
 
+
+  async present() {
+    this.isLoading = true;
+    return await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Subiendo firma digital por favor espere ...'
+    }).then(a => {
+      a.present().then(() => {
+        console.log('presented');
+        if (!this.isLoading) {
+          a.dismiss().then(() => console.log('abort presenting'));
+        }
+      });
+    });
+  }
+  
+  async dismiss() {
+    this.isLoading = false;
+    return await this.loadingController.dismiss().then(() => console.log('dismissed'));
+  }
   
 
 }

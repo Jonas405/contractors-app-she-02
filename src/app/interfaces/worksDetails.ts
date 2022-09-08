@@ -53,5 +53,25 @@ export interface PostNewWorkRequestRelationMandatoryMeasureValidationSupplySshe{
   validationSshe: number;
   mandatoryMeasuresDetailsId: number;
 }
-  
+
+export interface WorkDetails{
+  idRequest: number
+  companyName: string
+  companyEmail: string
+  agency: string
+  region: string
+  workTitle: string
+  initDate: string
+  endDate: string
+  workDescription: string
+  workType: string
+  workRiskDescription: string
+  workSignatureDir: string
+  workRequestStatus: string
+  createdAt: Date
+  area: string
+  specialRecomendation: string
+  nameCompanyRes: string
+  emailCompanyRes: string
+}
 

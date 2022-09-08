@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { WorkDetails } from 'src/app/interfaces/worksDetails';
+import { WorksService } from 'src/app/services/works.service';
 import { ModalCapacitacionesPage } from '../modal-capacitaciones/modal-capacitaciones.page';
 import { ModalDetalleDeTrabajoFotosPage } from '../modal-detalle-de-trabajo-fotos/modal-detalle-de-trabajo-fotos.page';
 import { ModalDetalleDeTrabajoListaEmpleadosPage } from '../modal-detalle-de-trabajo-lista-empleados/modal-detalle-de-trabajo-lista-empleados.page';
@@ -13,10 +15,39 @@ import { ModalMedidasFotosPage } from '../modal-medidas-fotos/modal-medidas-foto
 })
 export class ModalDetallesDeTrabajoPage implements OnInit {
 
-  //When work request has already approved all the employees need take a training before start the job
-  constructor(private modalCrtl: ModalController) { }
+  @Input() statusId;
+  @Input() statusName;
+  @Input() workRequestId
 
+  workSelectedDetails: WorkDetails;
+  
+  //When work request has already approved all the employees need take a training before start the job
+  constructor(private modalCrtl: ModalController,
+              private worksService: WorksService) { }
+
+  //I'll apply status 1 -> Pendiente -> Capacitacion - Juramento grabado - apto medico
+  //           status 2 -> Aprobado -> Subir evidencia
+  //Another status just work details.
   ngOnInit() {
+
+    console.log(this.statusId)
+    console.log(this.statusName)
+    console.log(this.workRequestId)
+
+    this.getWorksRequestDetailsById();
+  }
+
+  getWorksRequestDetailsById(){
+
+    console.log(this.workRequestId)
+
+    this.worksService.getWorksRequestDetailsById(this.workRequestId).subscribe((data:WorkDetails[])=>{
+      console.log(data)
+      this.workSelectedDetails = data[0]
+      console.log(this.workSelectedDetails)
+
+    })
+
   }
 
   async openModalWorkDetailsEmployeeList(){
@@ -54,18 +85,29 @@ export class ModalDetallesDeTrabajoPage implements OnInit {
     const modal = await this.modalCrtl.create({
       component: ModalMedidasFotosPage,
       componentProps:{
-       // 'workRequestId' : this.workRequestId,
-       // 'selectedMandatoryMeasures' : this.selectedMandatoryMeasures
+        'statusId': this.statusId,
+        'statusName':this.statusName,
+        'workRequestId':this.workRequestId,
+        'MedicalAndDeclaration': "declaration"
       }
     }); 
     await modal.present();
   }
 
 
+
   async openModalMandatoryTrainingByWorkType(){
+
+    console.log(this.statusId);
+    console.log(this.statusName);
+    console.log(this.workRequestId)
+
     const modal = await this.modalCrtl.create({
       component: ModalCapacitacionesPage,
       componentProps:{
+          'statusId': this.statusId,
+          'statusName':this.statusName,
+          'workRequestId':this.workRequestId
       }
     }); 
     await modal.present();

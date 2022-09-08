@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController, NavController } from '@ionic/angular';
-import { TrainingDetails } from 'src/app/interfaces/trainingDetails';
+import { Component, Input, OnInit } from '@angular/core';
+import { AlertController, ModalController, NavController } from '@ionic/angular';
+import { EvaluationDetails, SelectedAnswer, TrainingDetails } from 'src/app/interfaces/trainingDetails';
+import { WorkDetails } from 'src/app/interfaces/worksDetails';
 import { WorksService } from 'src/app/services/works.service';
 
 @Component({
@@ -10,10 +11,23 @@ import { WorksService } from 'src/app/services/works.service';
 })
 export class ModalCapacitacionesPage implements OnInit {
 
+  @Input() statusId;
+  @Input() statusName;
+  @Input() workRequestId
+
+  evaluationDetails : EvaluationDetails[] = []
+  
+  lstSelectedAnswer: SelectedAnswer [] = []
+
+  workSelectedDetails: WorkDetails;
+
+  cleaningLstAnswer : SelectedAnswer [] = []
+  
   trainingDetails: TrainingDetails[]
   constructor(private navCtrl: NavController,
-    private workServices: WorksService,
-    private modalCrtl: ModalController) { }
+    private modalCrtl: ModalController,
+    private worksService: WorksService,
+    private alertController: AlertController) { }
 
     //Here we need add which users has logged and take the training
     //Which work type id they w'll do for assigned the training
@@ -29,9 +43,158 @@ export class ModalCapacitacionesPage implements OnInit {
     console.log("entrando al notificaciones")
    // this.getUserIdFromStorage();
    // this.getTrainingsDetails();
+   console.log(this.statusId)
+   console.log(this.statusName)
+   console.log(this.workRequestId)
+   this.getWorksRequestDetailsById();
   }
 
+
+  getWorksRequestDetailsById(){
+    console.log(this.workRequestId)
+    this.worksService.getWorksRequestDetailsById(this.workRequestId).subscribe((data:WorkDetails[])=>{
+      console.log(data)
+      this.workSelectedDetails = data[0]
+      console.log(this.workSelectedDetails)
+    })
+
+  }
+
+
+  postSelectedQuestion(questionId:number,answerSelectedId:number){
+ 
+    console.log(questionId)
+    console.log(answerSelectedId)
+
+    let selectedAnswer = {} as SelectedAnswer;
+
+    selectedAnswer.question = questionId
+    selectedAnswer.anwser = answerSelectedId
+
+    console.log(selectedAnswer)
+    
+    this.lstSelectedAnswer.push(selectedAnswer)
+    console.log(this.lstSelectedAnswer)
+
+       //Generate an array with al selected measure by user for comparision with question to evaluate
+        if(this.cleaningLstAnswer.some(value => value.question === selectedAnswer.question)){
+        console.log("value already exists, need be deleted because are re-selected")
+        const index = this.cleaningLstAnswer.indexOf(selectedAnswer)
+        this.cleaningLstAnswer.splice(index,1)
+        console.log("inside the betoven")
+        console.log(this.cleaningLstAnswer)
+      }else{
+        console.log("value doesn't exists, need be added because no are selected")
+        console.log(selectedAnswer.question)
+        console.log("inside the betoven")
+        this.cleaningLstAnswer.push(selectedAnswer)
+        console.log(this.cleaningLstAnswer)
+      }  
+
+
+  }
+
+
+  shareEvaluation(){
+    let scoring = 0;
+    this.cleaningLstAnswer.forEach(element => {
+      if(element.question == 1){
+        if(element.anwser == 1 ){
+          scoring = scoring + 10
+        }
+      }
+
+      if(element.question == 2){
+        if(element.anwser == 1 ){
+          scoring = scoring + 10
+        }
+      }
+
+      if(element.question == 3){
+        if(element.anwser == 3 ){
+          scoring = scoring + 10
+        }
+      }
+
+      if(element.question == 4){
+        if(element.anwser == 3 ){
+          scoring = scoring + 10
+        }
+      }
+
+      if(element.question == 5){
+        if(element.anwser == 3 ){
+          scoring = scoring + 10
+        }
+      }
+
+      if(element.question == 6){
+        if(element.anwser == 2 ){
+          scoring = scoring + 10
+        }
+      }
+
+      if(element.question == 7){
+        if(element.anwser == 1 ){
+          scoring = scoring + 10
+        }
+      }
+
+      if(element.question == 8){
+        if(element.anwser == 3 ){
+          scoring = scoring + 10
+        }
+      }
+
+      if(element.question == 9){
+        if(element.anwser == 2 ){
+          scoring = scoring + 10
+        }
+      }
+
+      if(element.question == 10){
+        if(element.anwser == 1 ){
+          scoring = scoring + 10
+        }
+      }
+
+    });
+
+    console.log(scoring)
+    //Upload the scoring to the database and give another try
+    console.log(this.cleaningLstAnswer)
+    console.log(scoring)
+
+    this.closeScheduleModal(scoring)
+  }
   
+  closeScheduleModal(scoring){
+    this.presentAlert(scoring)
+    this.modalCrtl.dismiss();
+  }
+
+  async presentAlert(scoring) {
+
+    if(scoring > 80){
+      const alert = this.alertController.create({
+        header: 'Capacitación completada!',
+        subHeader: '¡Mensaje importante!',
+        message: 'Obtuviste una calificación de ' + scoring + 'aprobaste con éxito felicidades!',
+        buttons: ['OK'],
+      });
+      await (await alert).present();
+    }else{
+      const alert = this.alertController.create({
+        header: 'Capacitación reprobada!',
+        subHeader: '¡Mensaje importante!',
+        message: 'Obtuviste una calificación de ' + scoring + ' debes capacitarte nuevamene',
+        buttons: ['OK'],
+      });
+      await (await alert).present();
+    }
+
+  }
+
 
    //Refresh page profile 
    doRefresh(refresher) {

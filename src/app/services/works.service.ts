@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Agencies, CounterWorksByStatus, PostNewWorkRequestRelationMandatoryMeasureValidationSupplySshe, UserEmployeeCompany, WorkEmployeeTypes, WorkRequestByStatus } from '../interfaces/worksDetails';
+import { Agencies, CounterWorksByStatus, PostNewWorkRequestRelationMandatoryMeasureValidationSupplySshe, UserEmployeeCompany, WorkDetails, WorkEmployeeTypes, WorkRequestByStatus } from '../interfaces/worksDetails';
 import { MandatoryMeasureOptions, MandatoryMeasures } from '../interfaces/measuresDetails';
 import { NewEvidenceModel, NewWorkRequestModel, NewWorkRequestRelationMandatoryMeasureValidationSupplySshe, RelationWorkRequestEmployeeTypeModel, RelationWorkRequestMandatoryMeasureModel, WorkRequestRelationUserCompanyEmployeeModel } from '../models/work-request-model';
 import { TrainingDetails } from '../interfaces/trainingDetails';
@@ -82,6 +82,13 @@ export class WorksService {
     return this.http.get<MandatoryMeasureOptions[]>(`${this.url}getMandatoryMeasureByWorkRequestSelected/${id}`)
   }
 
+  //Get workRequest details by id 
+  getWorksRequestDetailsById(id: number){
+    return this.http.get<WorkDetails[]>(`${this.url}getWorksRequestDetailsById/${id}`)
+  }
+
+  
+
   //Mandatory measure options size for comparision
   getMandatoryMeasureByWorkRequestSelectedForComparision(id: number){
     return this.http.get<MandatoryMeasureOptions[]>(`${this.url}getMandatoryMeasureByWorkRequestSelected/${id}`)
@@ -96,6 +103,12 @@ export class WorksService {
     this.newPostEmitter.emit(newEvidence)
     console.log(newEvidence)
     return this.http.post(`${this.url}postNewEvidence`, newEvidence, {responseType: 'text'});
+  }
+
+  postNewEmployeeMedicalEvidence(newEvidence){
+    this.newPostEmitter.emit(newEvidence)
+    console.log(newEvidence)
+    return this.http.post(`${this.url}postNewEmployeeMedicalEvidence`, newEvidence, {responseType: 'text'});
   }
 
   //Need adjust to videos share by manu

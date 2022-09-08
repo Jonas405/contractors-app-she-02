@@ -19,6 +19,13 @@ export class Tab1Page {
 
   counterWorksByStatus : CounterWorksByStatus
   lstCounterWorksByStatus: CounterWorksByStatus[] = []
+
+  //I'll initializing the user type logged here for in the ngoinit draw the view
+  //userTypeLogged : string;
+  //Comment or uncomment typelogged for appear the button
+  userTypeLogged = "company_manager";
+  drawerViewByUserTypeLogged : number;
+
   constructor(private modalCrtl: ModalController,
               private storage: Storage,
               private navCtrl: NavController,
@@ -30,6 +37,9 @@ export class Tab1Page {
   //userDetails: UsersDetails
 
   ngOnInit(){
+
+    //Param commin from user logged where I'll check if are job manager company o just employee company
+    if(this.userTypeLogged == 'company_manager') this.drawerViewByUserTypeLogged = 1
 
     //Add input variable coming from login for this action with the user id logged
     this.getUserIdFromStorage();

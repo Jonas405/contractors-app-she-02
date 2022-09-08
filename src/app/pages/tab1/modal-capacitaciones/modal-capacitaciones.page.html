@@ -4,7 +4,7 @@
     <img slot="start" src="../../../assets/app_she_icon-05.png" alt="" width="50px" style="padding-left: 10px;">
 
     <ion-title>
-     <p align="center">{{training.title}}</p> 
+     <p align="center">{{workSelectedDetails?.workType}}</p> 
     </ion-title>
     
     <ion-avatar slot="end" style="width: 50px;height: 40px; margin-right:10px;">
@@ -14,16 +14,279 @@
 </ion-header>
 
 <ion-content>
+
   <ion-card-content>Detalles de entrenamiento</ion-card-content>
-  <ion-card >
-    <video class="center" controls="controls" preload="metadata" autoplay="autoplay" webkit-playsinline="webkit-playsinline" class="videoPlayer">
-      <source src="https://domappssuiteservices.com/e-learning-web-app/certificado-de-manejo/SHE_ALCOHOL_VFX_V003.mp4" type="video/mp4" />
+  <ion-card>
+    <ion-card-title>Bienvenida</ion-card-title>
+    <video class="center" controls="controls" preload="metadata" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+      <source src="https://domappssuiteservices.com/contractors/training-videos/SHE_BIENVENIDA_C_MG_V001.mp4" type="video/mp4" />
      </video>  
   </ion-card>
+
+  <ion-card>
+    <ion-card-title>Clasificación de trabajos</ion-card-title>
+    <video class="center" controls="controls" preload="metadata" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+      <source src="https://domappssuiteservices.com/contractors/training-videos/SHE_CLASIFICACION_TRABAJOS_MG_V001.mp4" type="video/mp4" />
+     </video>  
+  </ion-card>
+
+  <ion-card>
+    <ion-card-title>Código de vestimenta</ion-card-title>
+    <video class="center" controls="controls" preload="metadata" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+      <source src="https://domappssuiteservices.com/contractors/training-videos/SHE_CODIGO_VESTIMENTA_V001.mp4" type="video/mp4" />
+     </video>  
+  </ion-card>
+
+
+  <ion-card>
+    <ion-card-title>Definiciones</ion-card-title>
+    <video class="center" controls="controls" preload="metadata"  webkit-playsinline="webkit-playsinline" class="videoPlayer">
+      <source src="https://domappssuiteservices.com/contractors/training-videos/SHE_DEFINICIONES_MG_V001.mp4" type="video/mp4" />
+     </video>  
+  </ion-card>
+
+  <ion-card>
+    <ion-card-title>Emergencias</ion-card-title>
+    <video class="center" controls="controls" preload="metadata" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+      <source src="https://domappssuiteservices.com/contractors/training-videos/SHE_EMERGENCIAS_MG_V001.mp4" type="video/mp4" />
+     </video>  
+  </ion-card>
+
+  <ion-card>
+    <ion-card-title>LOTO</ion-card-title>
+    <video class="center" controls="controls" preload="metadata" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+      <source src="https://domappssuiteservices.com/contractors/training-videos/SHE_LOTO_MG_V001.mp4" type="video/mp4" />
+     </video>  
+  </ion-card>
+
+  <ion-card>
+    <ion-card-title>Política</ion-card-title>
+    <video class="center" controls="controls" preload="metadata" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+      <source src="https://domappssuiteservices.com/contractors/training-videos/SHE_POLITICAS_MG_V001.mp4" type="video/mp4" />
+     </video>  
+  </ion-card>
+
+  <ion-card>
+    <ion-card-title>Principios de seguridad</ion-card-title>
+    <video class="center" controls="controls" preload="metadata" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+      <source src="https://domappssuiteservices.com/contractors/training-videos/SHE_PRINCIPIOSDESEGURIDAD_MG_V001.mp4" type="video/mp4" />
+     </video>  
+  </ion-card>
+
+  <ion-card>
+    <ion-card-title>PTW ( Permiso de trabajo ) </ion-card-title>
+    <video class="center" controls="controls" preload="metadata" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+      <source src="https://domappssuiteservices.com/contractors/training-videos/SHE_PTW_MG_V001.mp4" type="video/mp4" />
+     </video>  
+  </ion-card>
+
+  <ion-card>
+    <ion-card-title>Reporte de accidente</ion-card-title>
+    <video class="center" controls="controls" preload="metadata"  webkit-playsinline="webkit-playsinline" class="videoPlayer">
+      <source src="https://domappssuiteservices.com/contractors/training-videos/SHE_REPORTE_ACCIDENTES_MG_V001.mp4" type="video/mp4" />
+     </video>  
+  </ion-card>
+
+
+  <ion-card>
+    <ion-card-title>Residuos</ion-card-title>
+    <video class="center" controls="controls" preload="metadata"  webkit-playsinline="webkit-playsinline" class="videoPlayer">
+      <source src="https://domappssuiteservices.com/contractors/training-videos/SHE_TRAT_RESIDUOS_MG_V002.mp4" type="video/mp4" />
+     </video>  
+  </ion-card>
+
+ 
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Evaluación de capacitación</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-card-subtitle>¿Entiendes la politica de seguridad, salud y medio ambiente?</ion-card-subtitle>
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(1,1)"></ion-checkbox>
+          <p>si</p>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(1,2)"></ion-checkbox>
+          <p>no</p>
+        </ion-item>
+    </ion-card-content>
+
+    <ion-card-content>
+      <ion-card-subtitle>Selecciona un punto importante de la politica SHE</ion-card-subtitle>
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(2,1)"></ion-checkbox>
+          <p>1.- No hagas actividades para las que no has sido entrenado</p>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(2,2)"></ion-checkbox>
+          <p>2.- Siempre porta tu EPP completo</p>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(2,3)"></ion-checkbox>
+          <p>3.- Trabajar sin seguridad es una condicion de empleo</p>
+        </ion-item>
+    </ion-card-content>
+
+    <ion-card-content>
+      <ion-card-subtitle>Selecciona de la lista siguiente, un trabajo de alto riesgo</ion-card-subtitle>
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(3,1)"></ion-checkbox>
+          <p>1.- Pintar	</p>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(3,2)"></ion-checkbox>
+          <p>2.- Jardineria	</p>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(3,3)"></ion-checkbox>
+          <p>3.- Trabajo en alturas	</p>
+        </ion-item>
+    </ion-card-content>
+
+    <ion-card-content>
+      <ion-card-subtitle>¿Qué pasa si no sigo las normas de seguridad de Unilever?</ion-card-subtitle>
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(4,1)"></ion-checkbox>
+          <p>1.- Nada</p>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(4,2)"></ion-checkbox>
+          <p>2.-Me llaman la atencion</p>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(4,3)"></ion-checkbox>
+          <p>3.- Pueden vetarme del acceso a la agencia o planta	</p>
+        </ion-item>
+    </ion-card-content>
+
+    <ion-card-content>
+      <ion-card-subtitle>¿Quién es responsable de tu seguridad?</ion-card-subtitle>
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(5,1)"></ion-checkbox>
+          <p>1.- Mi jefe directo</p>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(5,2)"></ion-checkbox>
+          <p>2.- SHE	</p>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(5,3)"></ion-checkbox>
+          <p>3.- Yo mismo</p>
+        </ion-item>
+    </ion-card-content>
+
+    <ion-card-content>
+      <ion-card-subtitle>¿Qué equipo de proteccion personal debo portar en todo momento?</ion-card-subtitle>
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(6,1)"></ion-checkbox>
+          <p>1.- Mezclilla y chaleco</p>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(6,2)"></ion-checkbox>
+          <p>2.- Chaleco refelejante, botas de seguridad y ropa de mezclilla</p>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(6,3)"></ion-checkbox>
+          <p>3.-La normal	</p>
+        </ion-item>
+    </ion-card-content>
+
+    <ion-card-content>
+      <ion-card-subtitle>¿Qué documentacion es necesaria para poder laborar en Unilever?	</ion-card-subtitle>
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(7,1)"></ion-checkbox>
+          <p>1.- DC-3, SUA e IMSS	</p>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(7,2)"></ion-checkbox>
+          <p>2.- SUA e IMSS	</p>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(7,3)"></ion-checkbox>
+          <p>3.- El permiso de trabajo	</p>
+        </ion-item>
+    </ion-card-content>
+
+    <ion-card-content>
+      <ion-card-subtitle>¿Cómo se llama el documento que es necesario llenar para poder trabajar dentro de Unilever?</ion-card-subtitle>
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(8,1)"></ion-checkbox>
+          <p>1.- DC-3	</p>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(8,2)"></ion-checkbox>
+          <p>2.- SUA</p>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(8,3)"></ion-checkbox>
+          <p>3.- PTW (Permiso de trabajo)</p>
+        </ion-item>
+    </ion-card-content>
+
+    <ion-card-content>
+      <ion-card-subtitle>¿Qué pasa si me accidente y no reporto?	</ion-card-subtitle>
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(9,1)"></ion-checkbox>
+          <p>1.-Nada</p>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(9,2)"></ion-checkbox>
+          <p>2.- Puedo entrar en validacion de cancelacion del trabajo</p>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(9,3)"></ion-checkbox>
+          <p>3.- Se interrumpe el trabajo	</p>
+        </ion-item>
+    </ion-card-content>
+
+
+    <ion-card-content>
+      <ion-card-subtitle>¿Qué debo validar antes de iniciar mis trabajos?</ion-card-subtitle>
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(10,1)"></ion-checkbox>
+          <p>1.- Que el area sea segura, contar con mi check list de mi equipo y unidad, contar con mi EPP completo según la tarea y tener buena salud.</p>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(10,2)"></ion-checkbox>
+          <p>2.- Mi salud y la de mis compañeros.</p>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox slot="start" (click)="postSelectedQuestion(10,3)"></ion-checkbox>
+          <p>3.- Mi documentacion en regla y pedir permisos a todos los involucrados.</p>
+        </ion-item>
+    </ion-card-content>
+
+
+  </ion-card>
+
+
 </ion-content>
 
+
 <ion-footer>
-  <ion-button expand="block"  color="primary">
-    Regresar
+  <ion-button (click)="shareEvaluation()" expand="block"  color="primary">
+    Enviar
   </ion-button>
 </ion-footer>

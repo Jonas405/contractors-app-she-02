@@ -7,3 +7,21 @@ export interface TrainingDetails {
     dirFileTraining: string;
     workTypeId: number;
   }
+
+export interface EvaluationDetails {
+  id:number;
+  workRequestId: number;
+  userCompanyEmployeeId: number;
+  questionId: number;
+  answer: number
+  correct: number;
+  scoring: number;
+  createdAt: string;
+
+}
+
+export interface SelectedAnswer {
+  question:number;
+  anwser: number;
+}
+

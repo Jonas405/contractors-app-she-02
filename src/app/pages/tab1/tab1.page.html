@@ -2,19 +2,42 @@
 
   <h2>Trabajos</h2>
 
-  <ion-grid fixed>
-    <ion-row>
-       <ion-col size="12" *ngFor="let item of lstCounterWorksByStatus">    
+  <div *ngIf="userTypeLogged == 'company_manager';else company_employee">
+    <ion-grid fixed>
+      <ion-row>
+         <ion-col size="12" *ngFor="let item of lstCounterWorksByStatus">    
+  
+     
+          <div *ngIf="item[0].statusName != null">
+            <ion-card (click)="openWorkListSelected(item[0].statusId,item[0].statusName)" >
+              <ion-button expand="full"><b></b><h1>{{item[0].statusName}} - {{item[0].pendingWorks}}</h1></ion-button>
+            </ion-card> 
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  
 
-   
-        <div *ngIf="item[0].statusName != null">
-          <ion-card (click)="openWorkListSelected(item[0].statusId,item[0].statusName)" >
-            <ion-button expand="full"><b></b><h1>{{item[0].statusName}} - {{item[0].pendingWorks}}</h1></ion-button>
-          </ion-card> 
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  </div>
+  
+  <ng-template #company_employee>
+    <ion-grid fixed>
+      <ion-row>
+         <ion-col size="12" *ngFor="let item of lstCounterWorksByStatus">    
+  
+     
+          <div *ngIf="item[0].statusName != null">
+            <ion-card (click)="openWorkListSelected(item[0].statusId,item[0].statusName)" >
+              <ion-button expand="full"><b></b><h1>{{item[0].statusName}} - {{item[0].pendingWorks}}</h1></ion-button>
+            </ion-card> 
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-template>
+
+  
+
 
 <!-- Notifications list  -->
 <h2>Notificaciones mas recientes</h2>
@@ -68,11 +91,14 @@
 
 </ion-content>
 
-<ion-footer>
-  <ion-button (click)="openPermitWorkModal()" expand="block"  color="primary">
-    <h3>Nueva solicitud</h3>
-  </ion-button>
-</ion-footer>
+<div *ngIf="userTypeLogged == 'company_manager'">
+  <ion-footer>
+    <ion-button (click)="openPermitWorkModal()" expand="block"  color="primary">
+      <h3>Nueva solicitud</h3>
+    </ion-button>
+  </ion-footer>
+</div>
+
 
 
 

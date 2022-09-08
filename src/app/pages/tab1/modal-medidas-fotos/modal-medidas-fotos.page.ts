@@ -26,6 +26,11 @@ export class ModalMedidasFotosPage implements OnInit {
     @Input() workRequestId;
     @Input() selectedMandatoryMeasures;
 
+    //For modal when open from medical status need received this parameters
+
+    //'workRequestId':this.workRequestId,
+    //'MedicalAndDeclaration': "declaration"
+    @Input() MedicalAndDeclaration;
 
     //pick photo from gallery 
   galleryOptions: CameraOptions = {
@@ -69,6 +74,9 @@ export class ModalMedidasFotosPage implements OnInit {
     console.log("entro en el que tal")
     console.log(this.workRequestId)
     console.log(this.selectedMandatoryMeasures)
+
+    console.log("QLQ")
+    console.log(this.MedicalAndDeclaration)
 
     this.files.forEach(element=>{
       this.deleteFile(element)
@@ -302,25 +310,53 @@ async makeVideoIntoBlobUploadToServer(imagePath) {
     observe: 'events'
   }).subscribe(async event =>{
     if(event.type === HttpEventType.Response){
-      let url ='https://www.domappssuiteservices.com/contractors/evidence-mandatory-measures/'
-      const ext = this.pathToUpload.split('.').pop();
-      let datenow = new Date();
-      let dformat = datenow.toISOString().replace("T"," ").substring(0, 19);
-      const newPostFile = `${this.workRequestId}.${dformat}.${ext}`;
-      this.newEvidence.dirEvidenceFile = `${url}${newPostFile}`;
-        var formdata = new FormData();    
-        formdata.append("postNewEvidenceWorkFileRequest", event.body,newPostFile)
-        //Here I need add the direction endpoint where I'll send the file
-        this.http.post("http://192.168.0.3:4000/postNewEvidenceWorkFileRequest", formdata).subscribe((response) => {
-        console.log(response)
-        this.dismiss()
-        this.PostDataBase(this.newEvidence.dirEvidenceFile)  
-         //Clear file present to show another time share evidency
-        this.files.forEach(element=>{
-          this.deleteFile(element)
-            })
-      }); 
+
+      //------- if to validate if they are comming to evidence measures or medical declaration
+
+      if(this.MedicalAndDeclaration == 'declaration'){
+        //-------- This is for medical declaration
+        let url ='https://www.domappssuiteservices.com/contractors/medical-declaration-employees/'
+        const ext = this.pathToUpload.split('.').pop();
+        let datenow = new Date();
+        let dformat = datenow.toISOString().replace("T"," ").substring(0, 19);
+        const newPostFile = `${this.workRequestId}.${dformat}.${ext}`;
+        this.newEvidence.dirEvidenceFile = `${url}${newPostFile}`;
+          var formdata = new FormData();    
+          formdata.append("postNewEvidenceWorkFileRequest", event.body,newPostFile)
+          //Here I need add the direction endpoint where I'll send the file
+          this.http.post("http://192.168.0.3:4000/postNewEmployeeMedicalEvidenceFileRequest", formdata).subscribe((response) => {
+          console.log(response)
+          this.dismiss()
+          this.PostDataBaseEmployeeMedicalDeclaration(this.newEvidence.dirEvidenceFile)  
+          //Clear file present to show another time share evidency
+          this.files.forEach(element=>{
+            this.deleteFile(element)
+              })
+        }); 
+
+      }else{
+        //-------- This is for evidence measures  ----------------------------------------------
+        let url ='https://www.domappssuiteservices.com/contractors/evidence-mandatory-measures/'
+        const ext = this.pathToUpload.split('.').pop();
+        let datenow = new Date();
+        let dformat = datenow.toISOString().replace("T"," ").substring(0, 19);
+        const newPostFile = `${this.workRequestId}.${dformat}.${ext}`;
+        this.newEvidence.dirEvidenceFile = `${url}${newPostFile}`;
+          var formdata = new FormData();    
+          formdata.append("postNewEvidenceWorkFileRequest", event.body,newPostFile)
+          //Here I need add the direction endpoint where I'll send the file
+          this.http.post("http://192.168.0.3:4000/postNewEvidenceWorkFileRequest", formdata).subscribe((response) => {
+          console.log(response)
+          this.dismiss()
+          this.PostDataBase(this.newEvidence.dirEvidenceFile)  
+          //Clear file present to show another time share evidency
+          this.files.forEach(element=>{
+            this.deleteFile(element)
+              })
+        }); 
+        //-----------------------------------------
       }
+     }
     }) 
   }
 
@@ -337,34 +373,59 @@ async makeVideoIntoBlobUploadToServer(imagePath) {
     observe: 'events'
   }).subscribe(async event =>{
     if(event.type === HttpEventType.Response){
-      let url ='https://www.domappssuiteservices.com/contractors/evidence-mandatory-measures/'
-      const ext = finalImgPath.split('.').pop();
-      imagePath = finalImgPath
-      let datenow = new Date();
-      let dformat = datenow.toISOString().replace("T"," ").substring(0, 19);
-      const newPostFile = `${this.workRequestId}.${dformat}.${ext}`;
 
-      console.log("esta es la url");
-      console.log(url);
-      console.log("este es el objeto");
-      console.log(newPostFile)
-      this.newEvidence.dirEvidenceFile = `${url}${newPostFile}`;
-
-      console.log(this.newEvidence);
-
-      console.log(event.body)
-      var formdata = new FormData();    
-      formdata.append("postNewEvidenceWorkFileRequest", event.body, newPostFile)
-      console.log(formdata)
-      this.http.post("http://192.168.0.3:4000/postNewEvidenceWorkFileRequest", formdata).subscribe((response) => {
-      this.dismiss()
-      this.PostDataBase(this.newEvidence.dirEvidenceFile)  
-      //Clear file present to show another time share evidency
-      this.files.forEach(element=>{
-        this.deleteFile(element)
-      })
-      
-      }); 
+        //------- if to validate if they are comming to evidence measures or medical declaration
+        if(this.MedicalAndDeclaration == 'declaration'){
+          //-------- This is for medical declaration
+          let url ='https://www.domappssuiteservices.com/contractors/medical-declaration-employees/'
+          const ext = this.pathToUpload.split('.').pop();
+          let datenow = new Date();
+          let dformat = datenow.toISOString().replace("T"," ").substring(0, 19);
+          const newPostFile = `${this.workRequestId}.${dformat}.${ext}`;
+          this.newEvidence.dirEvidenceFile = `${url}${newPostFile}`;
+            var formdata = new FormData();    
+            formdata.append("postNewEvidenceWorkFileRequest", event.body,newPostFile)
+            //Here I need add the direction endpoint where I'll send the file
+            this.http.post("http://192.168.0.3:4000/postNewEmployeeMedicalEvidenceFileRequest", formdata).subscribe((response) => {
+            console.log(response)
+            this.dismiss()
+            this.PostDataBaseEmployeeMedicalDeclaration(this.newEvidence.dirEvidenceFile)  
+            //Clear file present to show another time share evidency
+            this.files.forEach(element=>{
+              this.deleteFile(element)
+                })
+          }); 
+  
+        }else{
+          //-------- This is for evidence measures  ----------------------------------------------
+          let url ='https://www.domappssuiteservices.com/contractors/evidence-mandatory-measures/'
+          const ext = finalImgPath.split('.').pop();
+          imagePath = finalImgPath
+          let datenow = new Date();
+          let dformat = datenow.toISOString().replace("T"," ").substring(0, 19);
+          const newPostFile = `${this.workRequestId}.${dformat}.${ext}`;
+    
+          console.log("esta es la url");
+          console.log(url);
+          console.log("este es el objeto");
+          console.log(newPostFile)
+          this.newEvidence.dirEvidenceFile = `${url}${newPostFile}`;
+    
+          console.log(this.newEvidence);
+    
+          console.log(event.body)
+          var formdata = new FormData();    
+          formdata.append("postNewEvidenceWorkFileRequest", event.body, newPostFile)
+          console.log(formdata)
+          this.http.post("http://192.168.0.3:4000/postNewEvidenceWorkFileRequest", formdata).subscribe((response) => {
+          this.dismiss()
+          this.PostDataBase(this.newEvidence.dirEvidenceFile)  
+          //Clear file present to show another time share evidency
+          this.files.forEach(element=>{
+            this.deleteFile(element)
+          })
+          }); 
+        }
       }
     })
   }
@@ -386,6 +447,30 @@ async makeVideoIntoBlobUploadToServer(imagePath) {
   this.newEvidence.userCompanyEmployeeId = 5
   console.log(this.newEvidence)
      this.worksService.postNewEvidence(this.newEvidence).subscribe(data=>{
+      console.log(data)
+      this.files.forEach(element=>{
+        this.deleteFile(element)
+        this.closeScheduleModal()
+      })
+     })
+ }
+
+ PostDataBaseEmployeeMedicalDeclaration(dirPost){
+  let datenow = new Date();
+  this.newEvidence.date = datenow.toISOString().replace("T"," ").substring(0, 19);
+ 
+  console.log("este es el id requests antres de subir evidencia")
+  console.log(this.workRequestId)
+  this.newEvidence.workRequestId = this.workRequestId
+  this.newEvidence.dirEvidenceFile = dirPost
+  console.log("Upload evidence ")
+  console.log("Upload evidence comment  "+this.newEvidence.comment)
+  console.log("Upload evidence url file"+this.newEvidence.dirEvidenceFile)
+  console.log("Upload evidence id work request "+this.newEvidence.workRequestId)
+  console.log("Upload post "+this.newEvidence.date) 
+  this.newEvidence.userCompanyEmployeeId = 5
+  console.log(this.newEvidence)
+     this.worksService.postNewEmployeeMedicalEvidence(this.newEvidence).subscribe(data=>{
       console.log(data)
       this.files.forEach(element=>{
         this.deleteFile(element)

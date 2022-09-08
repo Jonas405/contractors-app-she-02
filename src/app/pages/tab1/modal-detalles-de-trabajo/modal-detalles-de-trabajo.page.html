@@ -5,20 +5,17 @@
 </ion-header>
 
 <ion-content>
-
+  <div *ngIf="statusId==1">
     <ion-card>
       <ion-card-header>
-        <ion-card-title>Folio:61</ion-card-title>
-        <ion-card-subtitle>Responsable: Juan perez</ion-card-subtitle>
-        <ion-card-subtitle>Estatus: Completed</ion-card-subtitle>
-        <ion-card-subtitle>Agencia: Ceylan</ion-card-subtitle>
+        <ion-card-title>Folio:{{workRequestId}}</ion-card-title>
+        <ion-card-subtitle>Responsable: {{workSelectedDetails?.nameCompanyRes}}</ion-card-subtitle>
+        <ion-card-subtitle>Estatus: {{statusName}}</ion-card-subtitle>
+        <ion-card-subtitle>Agencia: {{workSelectedDetails?.agency}}</ion-card-subtitle>
         <ion-card-subtitle></ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
-        Descripciòn: Esta es un detalle extenso y detallado de todas 
-          las caracteristicas con las cuales se llevara 
-          acabo del trabajo , y decir que exactamente hara 
-          donde lo hara, como lo hara.
+        Descripciòn: {{workSelectedDetails?.workDescription}}
       </ion-card-content>
     </ion-card>
 
@@ -39,23 +36,73 @@
 
     <ion-card>
       <ion-card-header>
-        <ion-card-title>Declaraciones y evidencia de signos vitales.</ion-card-title>   
+        <ion-card-title>Declaración y evidencia de signos vitales.</ion-card-title>   
         <ion-text>
           Antes de pasar el trabajo a ejecutar a estado "Activo", debe 
           realizar una grabación en tiempo real declarando que sus signos vitales
           estan en perfecto estado para ejecutar la tarea y adjuntar una fotografia
-          de su apto medico con la fecha del dìa legible 
+          de su apto medico con la fecha del dìa legible.
         </ion-text>
         <section>
-          <ion-button (click)="openModalForRecordedVideoAndUploadEvidenceApto()" expand="block">Capacitaciones asignadas</ion-button>
+          <ion-button (click)="openModalForRecordedVideoAndUploadEvidenceApto()" expand="block">Subir apto medico y declaración jurada</ion-button>
         </section>
       </ion-card-header>
     </ion-card>
+</div>
+<!-- 
 
 
 
+<div *ngIf="statusId==2">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Folio:{{workSelectedDetails.idRequest}}</ion-card-title>
+      <ion-card-subtitle>Responsable: {{workSelectedDetails.nameCompanyRes}}</ion-card-subtitle>
+      <ion-card-subtitle>Estatus: {{statusName}}</ion-card-subtitle>
+      <ion-card-subtitle>Agencia: {{workSelectedDetails.agency}}</ion-card-subtitle>
+      <ion-card-subtitle></ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      Descripciòn: {{workSelectedDetails.workDescription}}
+    </ion-card-content>
+  </ion-card>
+  
+</div>
 
 
+<div *ngIf="statusId==3">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Folio:{{workSelectedDetails.idRequest}}</ion-card-title>
+      <ion-card-subtitle>Responsable: {{workSelectedDetails.nameCompanyRes}}</ion-card-subtitle>
+      <ion-card-subtitle>Estatus: {{statusName}}</ion-card-subtitle>
+      <ion-card-subtitle>Agencia: {{workSelectedDetails.agency}}</ion-card-subtitle>
+      <ion-card-subtitle></ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      Descripciòn: {{workSelectedDetails.workDescription}}
+    </ion-card-content>
+  </ion-card>
+</div>
 
 
+<div *ngIf="statusId== 4 || 5">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Folio:{{workSelectedDetails.idRequest}}</ion-card-title>
+      <ion-card-subtitle>Responsable: {{workSelectedDetails.nameCompanyRes}}</ion-card-subtitle>
+      <ion-card-subtitle>Estatus: {{statusName}}</ion-card-subtitle>
+      <ion-card-subtitle>Agencia: {{workSelectedDetails.agency}}</ion-card-subtitle>
+      <ion-card-subtitle></ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      Descripciòn: {{workSelectedDetails.workDescription}}
+    </ion-card-content>
+  </ion-card>
+</div>
+
+ -->
 </ion-content>
+
+
+

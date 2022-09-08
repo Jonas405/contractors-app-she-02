@@ -7,7 +7,7 @@
 <ion-content>
   <ion-list>
     <ion-list-header>Trabajos {{statusName}}</ion-list-header>
-    <ion-item *ngFor="let item of workRequestLst" (click)="openSelectedWorkDetails()" >
+    <ion-item *ngFor="let item of workRequestLst" (click)="openSelectedWorkDetails(item.workRequestId)" >
       <ion-avatar slot="start">
         <img src="../../../../assets/app_she_icon-05.png" />
       </ion-avatar>
