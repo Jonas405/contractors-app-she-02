@@ -48,3 +48,8 @@ color: #2B2B2B;
     max-height: 200px;
     width:100%;
   }
+
+  .wrapping-list .item-content, .wrapping-list .item {
+    overflow: initial;
+    white-space: initial;
+}

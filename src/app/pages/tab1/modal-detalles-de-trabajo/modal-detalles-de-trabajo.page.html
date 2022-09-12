@@ -17,6 +17,28 @@
       <ion-card-content>
         Descripciòn: {{workSelectedDetails?.workDescription}}
       </ion-card-content>
+      <div *ngIf="scoringEvaluation != undefinied && evidenceDocsLst != undefinied; else pending">
+        <ion-card-subtitle>Nota obtenida:  {{scoringEvaluation}} </ion-card-subtitle>
+        <p>Fecha: {{dateEvaluation}}</p>
+      
+        <p>Documentos en revisión:</p>
+         <ion-list *ngFor="let item of evidenceDocsLst">
+          <ion-item>
+            <ion-avatar slot="start">
+              <img src="./../../../../assets/app_she_icon-05.png" />
+            </ion-avatar>
+            <ion-label>
+              <h2>{{item?.comment}}</h2>
+              <h3>{{item?.dateCheck}}</h3>
+            </ion-label>
+          </ion-item>
+         </ion-list>
+   
+         <p>Por favor espere la aprobación SHE para continuar</p>
+      </div>
+      <ng-template #pending>
+        <p>Por favor ver todas las capacitaciones completas, aprobar la evaluación, subir declaración jurada y apto médico para continuar.</p>
+      </ng-template>
     </ion-card>
 
     <ion-card>
@@ -38,7 +60,8 @@
       <ion-card-header>
         <ion-card-title>Declaración y evidencia de signos vitales.</ion-card-title>   
         <ion-text>
-          Antes de pasar el trabajo a ejecutar a estado "Activo", debe 
+          Antes de iniciar el trabajo a estado "Activo", debe subir su DC3, SUA,
+          fotografia apto medico con la fecha del dìa legible y
           realizar una grabación en tiempo real declarando que sus signos vitales
           estan en perfecto estado para ejecutar la tarea y adjuntar una fotografia
           de su apto medico con la fecha del dìa legible.
@@ -56,38 +79,82 @@
     </ion-footer>
  </div>
 
-  <div *ngIf="statusId==2">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Folio:{{workRequestId}}</ion-card-title>
-        <ion-card-subtitle>Responsable: {{workSelectedDetails?.nameCompanyRes}}</ion-card-subtitle>
-        <ion-card-subtitle>Estatus: {{statusName}}</ion-card-subtitle>
-        <ion-card-subtitle>Agencia: {{workSelectedDetails?.agency}}</ion-card-subtitle>
-        <ion-card-subtitle></ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-        Descripciòn: {{workSelectedDetails?.workDescription}}
-      </ion-card-content>
-    </ion-card>
+ <div *ngIf="statusId==2">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Folio:{{workRequestId}}</ion-card-title>
+      <ion-card-subtitle>Responsable: {{workSelectedDetails?.nameCompanyRes}}</ion-card-subtitle>
+      <ion-card-subtitle>Estatus: {{statusName}}</ion-card-subtitle>
+      <ion-card-subtitle>Agencia: {{workSelectedDetails?.agency}}</ion-card-subtitle>
+      <ion-card-subtitle></ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      Descripciòn: {{workSelectedDetails?.workDescription}}
+    </ion-card-content>
+    <div *ngIf="scoringEvaluation != undefinied && evidenceDocsLst != undefinied; else pending">
+      <ion-card-subtitle>Nota obtenida de evaluación:  {{scoringEvaluation}} </ion-card-subtitle>
+      <p>Fecha: {{dateEvaluation}}</p>
+    
+      <p>Documentos en revisados:</p>
+       <ion-list *ngFor="let item of evidenceDocsLst">
+        <ion-item>
+          <ion-avatar slot="start">
+            <img src="./../../../../assets/app_she_icon-05.png" />
+          </ion-avatar>
+          <ion-label>
+            <h2>{{item?.comment}}</h2>
+            <h3>{{item?.dateCheck}}</h3>
+          </ion-label>
+        </ion-item>
+       </ion-list>
 
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Subir evidencias de avance</ion-card-title>   
-        <ion-text>
-          Al seleccionar podra subir todas las evidencias de avance o pruebas de culminacion fotograficas o vìdeos del trabajo
-        </ion-text>
-        <section>
-          <ion-button (click)="openModalForUploadWorkEvidence()" expand="block">Subir evidencias</ion-button>
-        </section>
-      </ion-card-header>
-    </ion-card>
+       <p>Evidencias enviadas:</p>
+       <ion-list *ngFor="let item of evidenceAdvanceLst">
+        <ion-item>
+          <ion-avatar slot="start">
+            <img src="{{item.dirEvidenceFile}}" />
+          </ion-avatar>
+          <ion-label>
+            <div class="ion-text-wrap">
+              <h3>Subida por: {{item?.nameEmployee}} {{item?.lastNameEmployee}}</h3>
+            </div>
+            <div class="ion-text-wrap">
+            <h3>{{item?.comment}}</h3>
+          </div>
+          <div class="ion-text-wrap">
+            <h3>{{item?.dateCheck}}</h3>
+          </div>
+           
+          </ion-label>
+        </ion-item>
+       </ion-list>
+ 
+       <p>Por favor espere la aprobación SHE para continuar</p>
+    </div>
+    <ng-template #pending>
+      <p>Por favor ver todas las capacitaciones completas, aprobar la evaluación, subir declaración jurada y apto médico para continuar.</p>
+    </ng-template>
+  </ion-card>
 
-    <ion-footer>
-      <ion-button (click)="closeScheduleModal()" expand="block"  color="primary">
-        Volver
-      </ion-button>
-    </ion-footer>
- </div>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Subir evidencias de avance</ion-card-title>   
+      <ion-text>
+        Al seleccionar podra subir todas las evidencias de avance o pruebas de culminacion fotograficas o vìdeos del trabajo
+      </ion-text>
+      <section>
+        <ion-button (click)="openModalForUploadWorkEvidence()" expand="block">Subir evidencias</ion-button>
+      </section>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-footer>
+    <ion-button (click)="closeScheduleModal()" expand="block"  color="primary">
+      Volver
+    </ion-button>
+  </ion-footer>
+</div>
 
  <div *ngIf="statusId==3">
   <ion-card>
@@ -101,7 +168,63 @@
     <ion-card-content>
       Descripciòn: {{workSelectedDetails?.workDescription}}
     </ion-card-content>
+    <div *ngIf="scoringEvaluation != undefinied && evidenceDocsLst != undefinied; else pending">
+      <ion-card-subtitle>Nota obtenida de evaluación:  {{scoringEvaluation}} </ion-card-subtitle>
+      <p>Fecha: {{dateEvaluation}}</p>
+    
+      <p>Documentos en revisados:</p>
+       <ion-list *ngFor="let item of evidenceDocsLst">
+        <ion-item>
+          <ion-avatar slot="start">
+            <img src="./../../../../assets/app_she_icon-05.png" />
+          </ion-avatar>
+          <ion-label>
+
+            <div class="ion-text-wrap">
+              <h2>{{item?.comment}}</h2>
+            </div>
+
+            <div class="ion-text-wrap">
+              <h3>{{item?.dateCheck}}</h3>
+            </div>
+            
+          </ion-label>
+        </ion-item>
+       </ion-list>
+
+       <p>Evidencias enviadas:</p>
+       <ion-list *ngFor="let item of evidenceAdvanceLst">
+        <ion-item>
+          <ion-avatar slot="start">
+            <img src="{{item.dirEvidenceFile}}" />
+          </ion-avatar>
+          <ion-label>
+            <div class="ion-text-wrap">
+              <h3>Subida por : {{item?.nameEmployee}}  {{item?.lastNameEmployee}}</h3>
+            </div>
+
+            <div class="ion-text-wrap">
+              <h3>{{item?.comment}}</h3>
+            </div>
+
+            <div class="ion-text-wrap">
+              <h3>{{item?.dateCheck}}</h3>
+            </div>
+
+           
+       
+         
+          </ion-label>
+        </ion-item>
+       </ion-list>
+ 
+       <p>Por favor espere la aprobación SHE para continuar</p>
+    </div>
+    <ng-template #pending>
+      <p>Por favor ver todas las capacitaciones completas, aprobar la evaluación, subir declaración jurada y apto médico para continuar.</p>
+    </ng-template>
   </ion-card>
+
 
   <ion-card>
     <ion-card-header>
@@ -123,6 +246,7 @@
 </div>
 
 <div *ngIf="statusId==4">
+  <h1>Trabajo interrumpido por incumplimiento de política</h1>
   <ion-card>
     <ion-card-header>
       <ion-card-title>Folio:{{workRequestId}}</ion-card-title>

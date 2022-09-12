@@ -17,9 +17,14 @@ export class ModalDetallesDeTrabajoPage implements OnInit {
 
   @Input() statusId;
   @Input() statusName;
-  @Input() workRequestId
+  @Input() workRequestId;
+  @Input() userId;
 
   workSelectedDetails: WorkDetails;
+  scoringEvaluation;
+  dateEvaluation;
+  evidenceDocsLst = [];
+  evidenceAdvanceLst = [];
   
   //When work request has already approved all the employees need take a training before start the job
   constructor(private modalCrtl: ModalController,
@@ -34,8 +39,45 @@ export class ModalDetallesDeTrabajoPage implements OnInit {
     console.log(this.statusId)
     console.log(this.statusName)
     console.log(this.workRequestId)
+    console.log(this.userId)
+
 
     this.getWorksRequestDetailsById();
+    this.getEvaluationScoringByWorkRequestAndEmployeeId();
+    this.getMandatoryMedicalStatusByWorkRequestAndEmployeeId();
+    this.getAdvanceEvidenceUploadByWorkRequest();
+  }
+
+  getAdvanceEvidenceUploadByWorkRequest(){
+    this.worksService.getAdvanceEvidenceUploadByWorkRequest(this.workRequestId).subscribe(data=>{
+      console.log(data);
+      data.forEach(element => {
+        this.evidenceAdvanceLst.push(element)
+      });
+    })
+
+    console.log(this.evidenceDocsLst)
+  }
+  
+  getMandatoryMedicalStatusByWorkRequestAndEmployeeId(){
+    this.worksService.getMandatoryMedicalStatusByWorkRequestAndEmployeeId(this.workRequestId,this.userId).subscribe(data=>{
+      console.log(data);
+      data.forEach(element => {
+        this.evidenceDocsLst.push(element)
+      });
+    })
+
+    console.log(this.evidenceDocsLst)
+  }
+
+  getEvaluationScoringByWorkRequestAndEmployeeId(){
+    this.worksService.getEvaluationScoringByWorkRequestAndEmployeeId(this.workRequestId,this.userId).subscribe(data=>{
+      console.log(data);
+      this.scoringEvaluation = data[0]?.scoring
+      this.dateEvaluation = data[0]?.dateCheck
+      console.log(this.scoringEvaluation);
+      console.log(this.dateEvaluation)
+    })
   }
 
   getWorksRequestDetailsById(){

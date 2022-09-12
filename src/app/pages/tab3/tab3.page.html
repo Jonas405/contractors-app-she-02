@@ -1,17 +1,45 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Perfil
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
+ 
 
-  <p>En construcciòn</p>
+<header>
+  <h3>Perfil de contratista</h3>
+</header>
+
+
+<ion-content>
+  <ion-card>
+    <ion-card-title>
+      Empresa: {{userCompanyDetails?.companyName}}
+    </ion-card-title>
+    <ion-card-subtitle>
+      Empresa RFC : {{userCompanyDetails?.companyRfc}}
+    </ion-card-subtitle>
+    <ion-card-subtitle>
+      Usuario: {{userCompanyDetails?.jobManager}}
+    </ion-card-subtitle>
+    <ion-card-subtitle>
+      Usuario RFC: {{userCompanyDetails?.jobManagerRfc}}
+    </ion-card-subtitle>
+  </ion-card>
+
+  <h3>Solicitudes enviadas:</h3>
+  <ion-list class="wrapping-list">
+    <ion-item *ngFor="let item of lstWorkRequestByUserId">
+      <ion-card>
+        <ion-label>
+          <h3>Folio: {{item.workRequestId}}</h3>
+          <div class="ion-text-wrap">
+            <h3>Descripciòn: {{item.workRequestTitle}}</h3>
+          </div>
+          <p>Fecha Inicio: {{item.workRequestInitDate}}</p>
+          <p>Fecha Fin: {{item.workRequestEndDate}}</p>
+        </ion-label>
+      </ion-card>
+      </ion-item>
+  </ion-list>
+
 </ion-content>
+
+<ion-button color="light" expand="block" class="ion-margin-top" (click)="logout()">
+  Cerrar sesión
+</ion-button>

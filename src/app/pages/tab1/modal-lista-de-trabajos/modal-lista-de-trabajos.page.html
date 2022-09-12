@@ -12,11 +12,25 @@
         <img src="../../../../assets/app_she_icon-05.png" />
       </ion-avatar>
       <ion-label>
-        <h2>Folio: {{item.workRequestId}}</h2>
-        <h3>Objetivo: {{item.workRequestTitle}}</h3>
-        <h3>Sitio: {{item.agencyName}}</h3>
-        <h3>Fecha Inicio: {{item.workRequestInitDate}}</h3>
-        <h3>Fecha Fin: {{item.workRequestEndDate}}</h3>
+        <div class="ion-text-wrap">
+          <h2>Folio: {{item.workRequestId}}</h2>
+        </div>
+
+        <div class="ion-text-wrap">
+          <h3>Objetivo: {{item.workRequestTitle}}</h3>
+        </div>
+
+        <div class="ion-text-wrap">
+          <h3>Sitio: {{item.agencyName}}</h3>
+        </div>
+
+        <div class="ion-text-wrap">
+          <h3>Fecha Inicio: {{item.workRequestInitDate}}</h3>
+        </div>
+
+        <div class="ion-text-wrap">
+          <h3>Fecha Fin: {{item.workRequestEndDate}}</h3>
+        </div>
       </ion-label>
     </ion-item>
   </ion-list>

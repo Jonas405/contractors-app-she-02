@@ -123,10 +123,35 @@ export class WorksService {
     console.log(newEvidence)
     return this.http.post(`${this.url}postNewApprovedWorkEvidenceAdvance`, newEvidence, {responseType: 'text'});
   }
-  
+
+  //get evaluation scoring by work request and by employee id 
+ //Get user employees available for a company 
+ getEvaluationScoringByWorkRequestAndEmployeeId(workRequestId:number,employeeId:number){
+  return this.http.get(`${this.url}getEvaluationScoringByWorkRequestAndEmployeeId/${workRequestId}/${employeeId}`)
+}
+
+getMandatoryMedicalStatusByWorkRequestAndEmployeeId(workRequestId:number,employeeId:number){
+  return this.http.get<[]>(`${this.url}getMandatoryMedicalStatusByWorkRequestAndEmployeeId/${workRequestId}/${employeeId}`)
+}
+
+getAdvanceEvidenceUploadByWorkRequest(workRequestId:number){
+  return this.http.get<[]>(`${this.url}getAdvanceEvidenceUploadByWorkRequest/${workRequestId}`)
+}
+ 
   //Need adjust to videos share by manu
   getTrainingDetails(){
     return this.http.get<TrainingDetails[]>(`${this.url}getTrainingDetails`)
   }
+
+  //get top 20 notifications
+  getNotificationsByUserEmployeeId(employeeId:number){
+    return this.http.get<[]>(`${this.url}getNotificationsByUserEmployeeId/${employeeId}`)
+  }
+
+  getWorkRequestByEmployeeId(employeeId:number){
+    return this.http.get<[]>(`${this.url}getWorkRequestByEmployeeId/${employeeId}`)
+  }
+  
+  
 
 }

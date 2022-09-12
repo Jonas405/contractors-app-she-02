@@ -13,6 +13,7 @@ export class ModalListaDeTrabajosPage implements OnInit {
 
   @Input() statusId;
   @Input() statusName;
+  @Input() userId;
 
   workRequestLst: WorkRequestByStatus [] = []
 
@@ -49,7 +50,8 @@ export class ModalListaDeTrabajosPage implements OnInit {
       componentProps:{
         'statusId': this.statusId,
         'statusName':this.statusName,
-        'workRequestId':workRequestId
+        'workRequestId':workRequestId,
+        'userId':this.userId
       }
     }); 
     await modal.present();

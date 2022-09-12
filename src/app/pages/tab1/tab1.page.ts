@@ -19,6 +19,7 @@ export class Tab1Page {
 
   counterWorksByStatus : CounterWorksByStatus
   lstCounterWorksByStatus: CounterWorksByStatus[] = []
+  lstNotification = []
 
   //I'll initializing the user type logged here for in the ngoinit draw the view
   //userTypeLogged : string;
@@ -26,6 +27,7 @@ export class Tab1Page {
   userTypeLogged = "company_manager";
   drawerViewByUserTypeLogged : number;
 
+  userId;
   constructor(private modalCrtl: ModalController,
               private storage: Storage,
               private navCtrl: NavController,
@@ -53,14 +55,26 @@ export class Tab1Page {
     this.storage.get('idUserFromDb').then((val)=>{
       if(val != null ){
         console.log('Your id from db storage is home ', val);
+        this.userId = val;
       // this.idUserFromStorage = val; wait I need implements the login before 
       //In awhile I'll pass fix id param with 5
-       this.userDetailsLoggedById(5)
+       this.userDetailsLoggedById(val)
+       this.getNotificationsByUserEmployeeId(val)
       // this.nextEvents(); refresh the page when pull down
       }else{
         this.navCtrl.navigateRoot('/login');
       }
     })
+  }
+
+  getNotificationsByUserEmployeeId(id){
+    this.worksService.getNotificationsByUserEmployeeId(id).subscribe((data)=>{
+      data.forEach(element => {
+        this.lstNotification.push(element)
+      });
+    })
+
+    console.log(this.lstNotification)
   }
 
   userDetailsLoggedById(id){
@@ -100,7 +114,8 @@ export class Tab1Page {
       component: ModalListaDeTrabajosPage,
       componentProps:{
         'statusId': statusId,
-        'statusName':statusName
+        'statusName':statusName,
+        'userId':this.userId
       }
     }); 
     await modal.present();

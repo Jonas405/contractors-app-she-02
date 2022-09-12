@@ -1,3 +1,4 @@
+
 <ion-content>
 
   <h2>Trabajos</h2>
@@ -40,53 +41,23 @@
 
 
 <!-- Notifications list  -->
-<h2>Notificaciones mas recientes</h2>
-
-<ion-list>
-
-  <ion-item>
-    <ion-avatar  slot="start" style="width: 65px;height: 65px;">
-      <img  src="../../../assets/app_she_icon-05.png" />
-    </ion-avatar>
-    <ion-label >
-      <h2>Manuel Gonzalez</h2>
-      <h3>Trabajo aprobado</h3>
-      <p>Fecha : 06/06/2022 14:20:15</p>
-    </ion-label>
-  </ion-item>
-  <ion-item>
-    <ion-avatar  slot="start" style="width: 65px;height: 65px;">
-      <img  src="../../../assets/app_she_icon-05.png" />
-    </ion-avatar>
-    <ion-label >
-      <h2>Mauricio Rodriguez</h2>
-      <h3>Actividad aprobada</h3>
-      <p>Fecha : 06/06/2022 14:20:15</p>
-    </ion-label>
-  </ion-item>
-
-  <ion-item>
-    <ion-avatar  slot="start" style="width: 65px;height: 65px;">
-      <img  src="../../../assets/app_she_icon-05.png" />
-    </ion-avatar>
-    <ion-label >
-      <h2>Juan Perez</h2>
-      <h3>Se reprograma la actividad</h3>
-      <p>Fecha : 06/06/2022 11:20:15</p>
-    </ion-label>
-  </ion-item>
-
-  <ion-item>
-    <ion-avatar  slot="start" style="width: 65px;height: 65px;">
-      <img  src="../../../assets/app_she_icon-05.png" />
-    </ion-avatar>
-    <ion-label >
-      <h2>Manuel Gonzalez</h2>
-      <h3>Por favor asegurar el area</h3>
-      <p>Fecha : 06/06/2022 14:20:15</p>
-    </ion-label>
-  </ion-item>
-
+<h3>Notificaciones recientes Unilever SHE</h3>
+<ion-list class="wrapping-list">
+  <ion-item *ngFor="let item of lstNotification">
+    <ion-card>
+      <ion-label>
+        <h3>SHE: {{item.employeeUnileverName}} {{item.employeeUnileverLastName}}</h3>
+        <h3>Solicitud Folio: {{item.workRequestId}}</h3>
+        <div class="ion-text-wrap">
+          <h3>Descripciòn: {{item.workRequestTitle}}</h3>
+        </div>
+        <div class="ion-text-wrap">
+          <h3>Observación: {{item.comments}}</h3>
+        </div>
+        <p>Fecha : {{item.createdAt}}</p>
+      </ion-label>
+    </ion-card>
+    </ion-item>
 </ion-list>
 
 </ion-content>

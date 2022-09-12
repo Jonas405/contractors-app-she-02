@@ -1,17 +1,30 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-     Notificaciones
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large"> Notificaciones</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <p>Sin notificaciones</p>
+<!-- Notifications list  -->
+<h3>Notificaciones recientes Unilever SHE</h3>
+<ion-list class="wrapping-list">
+  <ion-item *ngFor="let item of lstNotification">
+    <ion-card>
+      <ion-label>
+        <h3>SHE: {{item.employeeUnileverName}} {{item.employeeUnileverLastName}}</h3>
+        <h3>Solicitud Folio: {{item.workRequestId}}</h3>
+        <div class="ion-text-wrap">
+          <h3>Descripciòn: {{item.workRequestTitle}}</h3>
+        </div>
+        <div class="ion-text-wrap">
+          <h3>Observación: {{item.comments}}</h3>
+        </div>
+        <p>Fecha : {{item.createdAt}}</p>
+      </ion-label>
+    </ion-card>
+    </ion-item>
+</ion-list>
+
 </ion-content>
+
+
+
+
+
