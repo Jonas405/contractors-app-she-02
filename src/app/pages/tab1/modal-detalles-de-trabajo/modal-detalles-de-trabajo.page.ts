@@ -42,6 +42,9 @@ export class ModalDetallesDeTrabajoPage implements OnInit {
     console.log(this.userId)
 
 
+    this.evidenceAdvanceLst = []
+    this.evidenceDocsLst = []
+
     this.getWorksRequestDetailsById();
     this.getEvaluationScoringByWorkRequestAndEmployeeId();
     this.getMandatoryMedicalStatusByWorkRequestAndEmployeeId();
@@ -49,6 +52,7 @@ export class ModalDetallesDeTrabajoPage implements OnInit {
   }
 
   getAdvanceEvidenceUploadByWorkRequest(){
+    console.log(this.workRequestId)
     this.worksService.getAdvanceEvidenceUploadByWorkRequest(this.workRequestId).subscribe(data=>{
       console.log(data);
       data.forEach(element => {

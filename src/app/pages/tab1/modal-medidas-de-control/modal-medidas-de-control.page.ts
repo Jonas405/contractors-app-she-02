@@ -27,7 +27,7 @@ export class ModalMedidasDeControlPage implements OnInit {
   groupedOrder: any
 
   //Measures grouped by mandatory measure name
-  groupedMeasures;
+  groupedMeasures: any = {};
 
   //Measure selected mandatory size 
   sizeMandatoryMeasureSelected;
@@ -98,7 +98,7 @@ export class ModalMedidasDeControlPage implements OnInit {
 
   groupMeasureById(){
     //We create a new object when we`ll save by mandatoryMeasureName
-    let groupedObjectByMandatoryMeasureName = {}
+    let groupedObjectByMandatoryMeasureName: any = {}
     this.lstMeasureOptionsAvailable.forEach( x => {
      // console.log("entro al for")
      // console.log(x)
@@ -121,6 +121,10 @@ export class ModalMedidasDeControlPage implements OnInit {
       
     })
     this.groupedMeasures = groupedObjectByMandatoryMeasureName
+
+
+    
+
   }
 
   selectedMeasuresByUser = [];

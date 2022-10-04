@@ -334,7 +334,7 @@ async makeVideoIntoBlobUploadToServer(imagePath) {
           var formdata = new FormData();    
           formdata.append("postNewEvidenceWorkFileRequest", event.body,newPostFile)
           //Here I need add the direction endpoint where I'll send the file
-          this.http.post("http://192.168.0.3:4000/postNewEmployeeMedicalEvidenceFileRequest", formdata).subscribe((response) => {
+          this.http.post("https://domapps.mx/contractors/postNewEmployeeMedicalEvidenceFileRequest", formdata).subscribe((response) => {
           console.log(response)
           this.dismiss()
           this.PostDataBaseEmployeeMedicalDeclaration(this.newEvidence.dirEvidenceFile)  
@@ -356,7 +356,7 @@ async makeVideoIntoBlobUploadToServer(imagePath) {
           var formdata = new FormData();    
           formdata.append("postNewEvidenceWorkFileRequest", event.body,newPostFile)
           //Here I need add the direction endpoint where I'll send the file
-          this.http.post("http://192.168.0.3:4000/postNewEvidenceWorkFileRequest", formdata).subscribe((response) => {
+          this.http.post("https://domapps.mx/contractors/postNewEvidenceWorkFileRequest", formdata).subscribe((response) => {
           console.log(response)
           this.dismiss()
           this.PostDataBase(this.newEvidence.dirEvidenceFile)  
@@ -379,7 +379,7 @@ async makeVideoIntoBlobUploadToServer(imagePath) {
           var formdata = new FormData();    
           formdata.append("postNewEvidenceWorkFileRequest", event.body,newPostFile)
           //Here I need add the direction endpoint where I'll send the file
-          this.http.post("http://192.168.0.3:4000/postNewApprovedWorkEvidenceAdvanceFileRequest", formdata).subscribe((response) => {
+          this.http.post("https://domapps.mx/contractors/postNewApprovedWorkEvidenceAdvanceFileRequest", formdata).subscribe((response) => {
           console.log(response)
           this.dismiss()
           this.PostDataBaseEvidenceWorkApprovedAdvance(this.newEvidence.dirEvidenceFile)  
@@ -421,7 +421,7 @@ async makeVideoIntoBlobUploadToServer(imagePath) {
             var formdata = new FormData();    
             formdata.append("postNewEvidenceWorkFileRequest", event.body,newPostFile)
             //Here I need add the direction endpoint where I'll send the file
-            this.http.post("http://192.168.0.3:4000/postNewEmployeeMedicalEvidenceFileRequest", formdata).subscribe((response) => {
+            this.http.post("https://domapps.mx/contractors/postNewEmployeeMedicalEvidenceFileRequest", formdata).subscribe((response) => {
             console.log(response)
             this.dismiss()
             this.PostDataBaseEmployeeMedicalDeclaration(this.newEvidence.dirEvidenceFile)  
@@ -452,7 +452,7 @@ async makeVideoIntoBlobUploadToServer(imagePath) {
           var formdata = new FormData();    
           formdata.append("postNewEvidenceWorkFileRequest", event.body, newPostFile)
           console.log(formdata)
-          this.http.post("http://192.168.0.3:4000/postNewEvidenceWorkFileRequest", formdata).subscribe((response) => {
+          this.http.post("https://domapps.mx/contractors/postNewEvidenceWorkFileRequest", formdata).subscribe((response) => {
           this.dismiss()
           this.PostDataBase(this.newEvidence.dirEvidenceFile)  
           //Clear file present to show another time share evidency
@@ -472,7 +472,7 @@ async makeVideoIntoBlobUploadToServer(imagePath) {
             var formdata = new FormData();    
             formdata.append("postNewEvidenceWorkFileRequest", event.body,newPostFile)
             //Here I need add the direction endpoint where I'll send the file
-            this.http.post("http://192.168.0.3:4000/postNewApprovedWorkEvidenceAdvanceFileRequest", formdata).subscribe((response) => {
+            this.http.post("https://domapps.mx/contractors/postNewApprovedWorkEvidenceAdvanceFileRequest", formdata).subscribe((response) => {
             console.log(response)
             this.dismiss()
             this.PostDataBaseEvidenceWorkApprovedAdvance(this.newEvidence.dirEvidenceFile)  

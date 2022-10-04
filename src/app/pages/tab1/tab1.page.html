@@ -1,8 +1,18 @@
 
 <ion-content>
 
-  <h2>Trabajos</h2>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
 
+  
+  <h2>Trabajos</h2>
+  
   <div *ngIf="userTypeLogged == 'company_manager';else company_employee">
     <ion-grid fixed>
       <ion-row>

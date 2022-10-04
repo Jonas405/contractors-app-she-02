@@ -158,8 +158,8 @@
 
     <ion-item>
       <ion-label>Tipo de trabajo a realizar</ion-label>
-      <ion-select multiple="false" (ionChange)="permitToWorkAddTypeLst($event)" cancelText="Cancelar" okText="Guardar">
-        <ion-select-option 
+      <ion-select multiple="false" (ionChange)="permitToWorkAddTypeLst($event)"  cancelText="Cancelar" okText="Guardar">
+        <ion-select-option class="ion-text-wrap"
         *ngFor="let item of lstWorkTypesToDo" >{{item.mandatoryMeasureName}}-{{item.mandatoryMeasureid}}</ion-select-option>
          </ion-select>
     </ion-item>
@@ -224,4 +224,4 @@
 
 
 
-<ion-button size="full" color="secondary" (click)="drawCompleted()">Medidas de solicitud obligatorias</ion-button>
+<ion-button size="full" color="secondary" (click)="drawCompleted()">Medidas Obligatorias</ion-button>

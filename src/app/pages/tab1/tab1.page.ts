@@ -40,6 +40,9 @@ export class Tab1Page {
 
   ngOnInit(){
 
+    this.lstCounterWorksByStatus = []
+    this.lstNotification = []
+
     //Param commin from user logged where I'll check if are job manager company o just employee company
     if(this.userTypeLogged == 'company_manager') this.drawerViewByUserTypeLogged = 1
 
@@ -49,6 +52,15 @@ export class Tab1Page {
     // esto es para cuando agreguegemos los usuarios y login
     //this.getUserIdFromStorage();
 
+  }
+  //Refresh page profile 
+  doRefresh(refresher) {
+    console.log('Begin async operation', refresher);
+
+    setTimeout(() => {
+      this.ngOnInit()
+      refresher.target.complete();
+    }, 2000);
   }
 
   getUserIdFromStorage(){

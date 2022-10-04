@@ -28,6 +28,7 @@ export class Tab3Page {
     private worksService: WorksService) {}
 
     ngOnInit(){
+      this.lstWorkRequestByUserId = []
 
       //Param commin from user logged where I'll check if are job manager company o just employee company
       if(this.userTypeLogged == 'company_manager') this.drawerViewByUserTypeLogged = 1
@@ -35,6 +36,16 @@ export class Tab3Page {
       //Add input variable coming from login for this action with the user id logged
       this.getUserIdFromStorage();
   
+    }
+
+     //Refresh page profile 
+     doRefresh(refresher) {
+      console.log('Begin async operation', refresher);
+  
+      setTimeout(() => {
+        this.ngOnInit()
+        refresher.target.complete();
+      }, 2000);
     }
 
     getUserIdFromStorage(){

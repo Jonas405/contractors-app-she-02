@@ -242,8 +242,7 @@
 
   <!-- </ion-accordion-group> -->
  <ion-accordion-group multiple="true">
-    <ion-accordion aria-expanded="true" (opened)="panelOpenState = true"
-    (closed)="panelOpenState = false"
+    <ion-accordion aria-expanded="true"
     
     *ngFor="let measure of groupedMeasures | keyvalue">
 
@@ -275,7 +274,7 @@
 
 </ion-content>
 
-<ion-button size="full" color="secondary"  (click)="ComperMeasuresSelectedAndMandatory()">Cargar evidencias para evaluación SHE</ion-button>
+<ion-button size="full" color="secondary"  (click)="ComperMeasuresSelectedAndMandatory()">Cargar evidencias</ion-button>
 
 
 <!-- 

@@ -442,7 +442,7 @@ export class ModalPermisoDeTrabajoPage implements OnInit {
 
   //Signature implementations
   public signatureImage: string;
-  private signaturePadOptions: Object = { // passed through to szimek/signature_pad constructor
+  public signaturePadOptions: Object = { // passed through to szimek/signature_pad constructor
     'minWidth': 1,
     'canvasWidth': 500,
     'canvasHeight': 300,
@@ -501,7 +501,7 @@ export class ModalPermisoDeTrabajoPage implements OnInit {
       console.log(formdata)
       formdata.append("postNewSignatureFileWorkRequest", blob, dirSignatureFile);
     // pruebas fisicas 
-          this.http.post("http://192.168.0.3:4000/postNewSignatureFileWorkRequest", formdata).subscribe((response) => {
+          this.http.post("https://domapps.mx/contractors/postNewSignatureFileWorkRequest", formdata).subscribe((response) => {
     //    this.http.post("http://localhost:4000/postNewSignatureFileWorkRequest", formdata).subscribe((response) => {
         console.log(response)
         this.dismiss();

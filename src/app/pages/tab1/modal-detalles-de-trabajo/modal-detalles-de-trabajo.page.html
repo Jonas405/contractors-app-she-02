@@ -17,7 +17,7 @@
       <ion-card-content>
         Descripciòn: {{workSelectedDetails?.workDescription}}
       </ion-card-content>
-      <div *ngIf="scoringEvaluation != undefinied && evidenceDocsLst != undefinied; else pending">
+      <div *ngIf="scoringEvaluation != undefined && evidenceDocsLst != undefined; else pending">
         <ion-card-subtitle>Nota obtenida:  {{scoringEvaluation}} </ion-card-subtitle>
         <p>Fecha: {{dateEvaluation}}</p>
       
@@ -51,7 +51,7 @@
           no pasa a estado "Activo" y no podra hacer inicio del mismo.
         </ion-text>
         <section>
-          <ion-button (click)="openModalMandatoryTrainingByWorkType()" expand="block">Capacitaciones asignadas</ion-button>
+          <ion-button (click)="openModalMandatoryTrainingByWorkType()" expand="block">Capacitaciones</ion-button>
         </section>
       </ion-card-header>
     </ion-card>
@@ -91,7 +91,7 @@
     <ion-card-content>
       Descripciòn: {{workSelectedDetails?.workDescription}}
     </ion-card-content>
-    <div *ngIf="scoringEvaluation != undefinied && evidenceDocsLst != undefinied; else pending">
+    <div *ngIf="scoringEvaluation != undefined && evidenceDocsLst != undefined; else pending">
       <ion-card-subtitle>Nota obtenida de evaluación:  {{scoringEvaluation}} </ion-card-subtitle>
       <p>Fecha: {{dateEvaluation}}</p>
     
@@ -168,7 +168,7 @@
     <ion-card-content>
       Descripciòn: {{workSelectedDetails?.workDescription}}
     </ion-card-content>
-    <div *ngIf="scoringEvaluation != undefinied && evidenceDocsLst != undefinied; else pending">
+    <div *ngIf="scoringEvaluation != undefined && evidenceDocsLst != undefined; else pending">
       <ion-card-subtitle>Nota obtenida de evaluación:  {{scoringEvaluation}} </ion-card-subtitle>
       <p>Fecha: {{dateEvaluation}}</p>
     

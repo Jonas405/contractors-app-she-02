@@ -10,7 +10,7 @@ export class ModalDetalleDeTrabajoListaEmpleadosPage implements OnInit {
 
   @Input() lstEmployeeCompany;
 
-  searchEmployee: string;
+  searchTerm: string | undefined ;
 
   selectedEmployeesByUser = []
 
