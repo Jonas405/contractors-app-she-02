@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 import { element } from 'protractor';
 import { MandatoryMeasureOptions } from 'src/app/interfaces/measuresDetails';
-import { NewWorkRequestRelationMandatoryMeasureValidationSupplySshe } from 'src/app/models/work-request-model';
+import { ApprovedMeasure, NewWorkRequestRelationMandatoryMeasureValidationSupplySshe } from 'src/app/models/work-request-model';
 import { WorksService } from 'src/app/services/works.service';
 import { ModalMedidasFotosPage } from '../modal-medidas-fotos/modal-medidas-fotos.page';
 
@@ -55,6 +55,54 @@ export class ModalMedidasDeControlPage implements OnInit {
       this.lstMeasureDetailsValidation = data
       console.log("Set this for validation over web")
       console.log(this.lstMeasureDetailsValidation)
+      //Here lstMeasureDetailsValidation we have all the data to insert in the 
+      //approbation table from the web for each job role to check Ventas Supply and SSHE
+      //so here we can added the information 
+
+      this.lstMeasureDetailsValidation.forEach(element => {
+
+        let lol = null;
+        lol = new ApprovedMeasure()
+        lol.workRequestId = this.workRequestId
+        lol.mandatoryMeasureDetailsId = element.mandatoryDetailsId
+
+        //Upload the data empty to fulfill in the web app 
+        this.worksService.postMeasuresForEvaluationVentas(lol).subscribe(
+          data=>{
+            console.log(data)
+          },
+          err=>{
+            console.log("no formo el objecto correctamente")
+            console.log(err)
+          }
+        )
+
+        this.worksService.postMeasuresForEvaluationSupply(lol).subscribe(
+          data=>{
+            console.log(data)
+          },
+          err=>{
+            console.log("no formo el objecto correctamente")
+            console.log(err)
+          }
+        )
+
+        this.worksService.postMeasuresForEvaluationSSHE(lol).subscribe(
+          data=>{
+            console.log(data)
+          },
+          err=>{
+            console.log("no formo el objecto correctamente")
+            console.log(err)
+          }
+        )
+
+      });
+
+
+
+
+
       console.log(data.length)
       this.sizeMandatoryMeasureSelected = data.length
     })

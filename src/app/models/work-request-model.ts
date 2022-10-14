@@ -68,3 +68,11 @@ export class NewWorkRequestRelationMandatoryMeasureValidationSupplySshe{
     date:string;
 }
 
+export class ApprovedMeasure {
+    id:number;
+    workRequestId: number;
+    unileverEmployeeId: number;
+    mandatoryMeasureDetailsId: number;
+    measureStatus: number;
+    jobRoleId: number
+}

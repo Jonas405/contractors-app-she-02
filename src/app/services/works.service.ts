@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Agencies, CounterWorksByStatus, PostNewWorkRequestRelationMandatoryMeasureValidationSupplySshe, UserEmployeeCompany, WorkDetails, WorkEmployeeTypes, WorkRequestByStatus } from '../interfaces/worksDetails';
 import { MandatoryMeasureOptions, MandatoryMeasures } from '../interfaces/measuresDetails';
-import { NewEvidenceModel, NewWorkRequestModel, NewWorkRequestRelationMandatoryMeasureValidationSupplySshe, RelationWorkRequestEmployeeTypeModel, RelationWorkRequestMandatoryMeasureModel, WorkRequestRelationUserCompanyEmployeeModel } from '../models/work-request-model';
+import { ApprovedMeasure, NewEvidenceModel, NewWorkRequestModel, NewWorkRequestRelationMandatoryMeasureValidationSupplySshe, RelationWorkRequestEmployeeTypeModel, RelationWorkRequestMandatoryMeasureModel, WorkRequestRelationUserCompanyEmployeeModel } from '../models/work-request-model';
 import { TrainingDetails } from '../interfaces/trainingDetails';
 import { UserCompanyDetails } from '../interfaces/userDetails';
 
@@ -151,6 +151,22 @@ getAdvanceEvidenceUploadByWorkRequest(workRequestId:number){
   getWorkRequestByEmployeeId(employeeId:number){
     return this.http.get<[]>(`${this.url}getWorkRequestByEmployeeId/${employeeId}`)
   }
+
+  //Post new work request approbation from VENTAS 
+  postMeasuresForEvaluationVentas(postMeasuresForEvaluationVentas: ApprovedMeasure){
+    return this.http.post(`${this.url}postMeasuresForEvaluationVentas`, postMeasuresForEvaluationVentas, {responseType: 'text'});
+  }
+
+    //Post new work request approbation from VENTAS 
+  postMeasuresForEvaluationSupply(postMeasuresForEvaluationSupply: ApprovedMeasure){
+    return this.http.post(`${this.url}postMeasuresForEvaluationSupply`, postMeasuresForEvaluationSupply, {responseType: 'text'});
+  }
+
+  //Post new work request approbation from VENTAS 
+  postMeasuresForEvaluationSSHE(postMeasuresForEvaluationSSHE: ApprovedMeasure){
+    return this.http.post(`${this.url}postMeasuresForEvaluationSSHE`, postMeasuresForEvaluationSSHE, {responseType: 'text'});
+  }
+  
   
   
 
